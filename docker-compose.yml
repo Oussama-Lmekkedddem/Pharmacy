@@ -1,0 +1,98 @@
+services:
+  postgres-stack:
+    container_name: postgres-stack
+    build:
+      context: .
+      dockerfile: dockerfile/postgres.Dockerfile
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-stack-data:/var/lib/postgresql/data/pgdata
+    restart: always
+    networks:
+      - app-network
+
+
+  pgadmin-stack:
+    container_name: pgadmin-stack
+    build:
+      context: .
+      dockerfile: dockerfile/pgadmin.Dockerfile
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+    links:
+      - "postgres-stack:pgsql-server"
+    depends_on:
+      - postgres-stack
+    restart: always
+    networks:
+      - app-network
+
+  odoo-stack:
+    container_name: odoo-stack
+    build:
+      context: .
+      dockerfile: dockerfile/odoo.Dockerfile
+    environment:
+      HOST: postgres-stack
+      USER: odoo
+      PASSWORD: odoo
+      DATABASE: odoo
+      NAME: odoo
+    volumes:
+      - ./extra-addons:/mnt/extra-addons
+      - odoo-web-data:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo.conf
+    ports:
+      - "8069:8069"
+    depends_on:
+      - postgres-stack
+    restart: always
+    networks:
+      - app-network
+
+  angular-stack:
+    container_name: angular-stack
+    build:
+      context: .
+      dockerfile: dockerfile/angular.Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - postgres-stack
+    networks:
+      - app-network
+
+  nginx-stack:
+    container_name: nginx-stack
+    build:
+      context: .
+      dockerfile: dockerfile/nginx.Dockerfile
+    ports:
+      - "80:80"    # non-secure
+      - "443:443"  # ssl
+    depends_on:
+      - odoo-stack
+      - pgadmin-stack
+      - angular-stack
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-stack-data:
+  pgadmin-data:
+  odoo-web-data:
+
