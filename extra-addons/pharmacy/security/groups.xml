@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="pharmacy_admin_group" model="res.groups">
+            <field name="name">Pharmacy Admin</field>
+        </record>
+
+        <record id="pharmacy_owner_group" model="res.groups">
+            <field name="name">Pharmacy Owner</field>
+        </record>
+
+    </data>
+</odoo>

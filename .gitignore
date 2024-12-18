@@ -1,1 +1,4 @@
 extra-addons/my_pharmacy/**/__pycache__/
+
+# IDEs and editors
+.idea/

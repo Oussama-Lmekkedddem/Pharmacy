@@ -1,0 +1,41 @@
+<odoo>
+    <!-- Define the main menu -->
+
+
+    <record id='pharmacy_medicine_action_form' model='ir.actions.act_window'>
+        <field name="name">Pharmacy Medicine</field>
+        <field name="res_model">pharmacy.medicine</field>
+        <field name="view_mode">tree,form,kanban,search,graph</field>
+    </record>
+
+    <menuitem name="Pharmacy" id="pharmacy_main_menu" />
+    <menuitem name="Medicines" id="Pharmacy_medicine_menu" parent="pharmacy_main_menu" action="pharmacy_medicine_action_form"/>
+
+
+    <!-- Client Dashboard Action -->
+    <record id="pharmacy_client_dashboard_action" model="ir.actions.act_url">
+        <field name="name">Client Dashboard</field>
+        <field name="url">/client/dashboard</field>
+        <field name="target">self</field>
+    </record>
+    <menuitem id="pharmacy_main_menu" name="Pharmacy" />
+    <menuitem id="pharmacy_menu_client" name="Client Dashboard" parent="pharmacy_main_menu" action="pharmacy_client_dashboard_action" />
+
+    <!-- Owner Dashboard Action -->
+    <record id="pharmacy_owner_dashboard_action" model="ir.actions.act_url">
+        <field name="name">Owner Dashboard</field>
+        <field name="url">/owner/dashboard</field>
+        <field name="target">self</field>
+    </record>
+    <menuitem id="pharmacy_main_menu" name="Pharmacy" />
+    <menuitem id="pharmacy_menu_owner" name="Owner Dashboard" parent="pharmacy_main_menu" action="pharmacy_owner_dashboard_action" />
+
+    <!-- Admin Dashboard Action -->
+    <record id="pharmacy_admin_dashboard_action" model="ir.actions.act_url">
+        <field name="name">Admin Dashboard</field>
+        <field name="url">/admin/dashboard</field>
+        <field name="target">self</field>
+    </record>
+    <menuitem id="pharmacy_main_menu" name="Pharmacy" />
+    <menuitem id="pharmacy_menu_admin" name="Admin Dashboard" parent="pharmacy_main_menu" action="pharmacy_admin_dashboard_action" />
+</odoo>

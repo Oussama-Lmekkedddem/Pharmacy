@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <template id="owner_page" name="Owner Page">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <h2>Welcome, <t t-esc="owner.name" />!</h2>
+                    <p>Email: <t t-esc="owner.email" /></p>
+                    <div class="mt-4">
+                        <a href="/logout" class="btn btn-danger">Logout</a>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

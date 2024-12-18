@@ -3,19 +3,9 @@
     <record id="medicine_action_form" model="ir.actions.act_window">
         <field name="name">Medicine</field>
         <field name="res_model">pharmacy.medicine</field>
-        <field name="view_mode">form</field>
+        <field name="view_mode">tree,form,kanban,search,graph</field>
     </record>
     <menuitem id="main_menu" name="Pharmacy" />
     <menuitem id="menu_medicine" name="Medicine" parent="main_menu" action="medicine_action_form" />
-
-<!--    <template id="admin_dashboard" name="Admin Dashboard">-->
-<!--        <t t-call="website.layout">-->
-<!--            <div class="container">-->
-<!--                &lt;!&ndash; Simple content without tables, using Odoo's layout &ndash;&gt;-->
-<!--                <h1>Welcome Admin</h1>-->
-<!--                <p>This is the Admin dashboard.</p>-->
-<!--            </div>-->
-<!--        </t>-->
-<!--    </template>-->
 
 </odoo>

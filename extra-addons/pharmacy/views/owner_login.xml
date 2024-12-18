@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <template id="owner_login" name="Login Page">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <h2>Login</h2>
+                    <t t-if="error">
+                        <div class="alert alert-danger" role="alert">
+                            <t t-esc="error" />
+                        </div>
+                    </t>
+                    <form action="/owner/login" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" name="email" id="email" class="form-control" required="required"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required="required"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <a href="/owner/create_account" class="btn btn-link">Create an account</a>
+                    </form>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
