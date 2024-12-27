@@ -8,7 +8,6 @@ class Owner(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']  # Inherit to use message_post
     _description = 'Owner'
 
-    user_id = fields.Many2one('res.users', string='Owner user', ondelete='set null')
     name = fields.Char(string='Name', required=True)
     email = fields.Char(string='Email', required=True)
     password = fields.Char(string='Password', required=True)
@@ -16,34 +15,24 @@ class Owner(models.Model):
     address = fields.Char(string='Address')
     phone = fields.Char(string='Phone')
     is_verified = fields.Boolean(string="Is Verified", default=False)
-
-    # Relation: One owner can have only one pharmacy
     pharmacy_id = fields.One2many('pharmacy.pharmacy', 'owner_id', string='Pharmacy', limit=1)
 
     @api.model
     def create_owner(self, name, email, password):
-        """Create an owner with basic information and send a verification email"""
         self.validate_name_fields(name)
         self.validate_email_fields(email)
         self.validate_password_fields(password)
 
-        user_vals = {
-            'name': name,
-            'login': email,  # Use the email as the login for authentication
-            'password': password,  # Assign password for login
-            'groups_id': [(6, 0, [self.env.ref('base.group_user').id])],  # Assign the user to the general user group
-        }
-        user = self.env['res.users'].create(user_vals)
+        if self.search([('email', '=', email)]):
+            raise ValidationError("An owner with this email already exists.")
 
-        # Create the Owner record and link it to the user
         owner = self.create({
             'name': name,
             'email': email,
             'password': password,
-            'user_id': user.id,  # Link to the user account
         })
 
-        owner.message_post(body=f"Owner {owner.name} created successfully. Please verify your email to complete registration.")
+        owner.message_post(body="Owner created successfully.")
         return owner
 
     def update_owner(self, owner_id, name=None, email=None, password=None, carte_id=None, address=None, phone=None):

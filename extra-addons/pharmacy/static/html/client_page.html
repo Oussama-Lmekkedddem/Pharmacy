@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/pharmacy/static/css/tailwind.css">
+    <link rel="stylesheet" href="/pharmacy/static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Client Page</title>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+   <section class="mx-auto fixed z-50 flex flex-col items-end">
+      <!-- navbar -->
+    <nav class="flex justify-between bg-gray-900 text-white w-screen">
+      <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+        <a class="text-3xl font-bold font-heading" href="#">
+          <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+          PHARMA
+        </a>
+        <!-- Nav Links -->
+        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+          <li><a class="hover:text-gray-200" href="#">Home</a></li>
+          <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
+          <li><a class="hover:text-gray-200" href="#">Collections</a></li>
+          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
+        </ul>
+        <!-- Header Icons -->
+        <div class="hidden xl:flex items-center space-x-5 items-center">
+          <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleReservationDropdown()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            <span class="flex absolute -mt-5 ml-4">
+              <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                </span>
+              </span>
+          </button>
+
+         <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
+                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+         </button>
+        </div>
+      </div>
+      <!-- Responsive navbar -->
+      <a class="xl:hidden flex mr-6 items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span class="flex absolute -mt-5 ml-4">
+          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+          </span>
+        </span>
+      </a>
+      <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </a>
+    </nav>
+    <!-- dropdown element -->
+    <div class="absolute z-50 mt-24">
+           <div id="navbar_dropdown"
+                 class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                <div class="px-4 py-3">
+                    <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
+                    <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
+                </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    </li>
+                </ul>
+           </div>
+           <div id="navbar_reservation_dropdown"
+                 class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Product name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Color
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Category
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Price
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <span class="sr-only">View</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Apple MacBook Pro 17"
+                                </th>
+                                <td class="px-6 py-4">
+                                    Silver
+                                </td>
+                                <td class="px-6 py-4">
+                                    Laptop
+                                </td>
+                                <td class="px-6 py-4">
+                                    $2999
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Microsoft Surface Pro
+                                </th>
+                                <td class="px-6 py-4">
+                                    White
+                                </td>
+                                <td class="px-6 py-4">
+                                    Laptop PC
+                                </td>
+                                <td class="px-6 py-4">
+                                    $1999
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                                </td>
+                            </tr>
+                            <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Magic Mouse 2
+                                </th>
+                                <td class="px-6 py-4">
+                                    Black
+                                </td>
+                                <td class="px-6 py-4">
+                                    Accessories
+                                </td>
+                                <td class="px-6 py-4">
+                                    $99
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+           </div>
+       </div>
+
+
+
+
+
+
+  </section>
+
+    <main class="flex-grow flex items-center justify-center mt-24">
+        <div class="bg-gray-100">
+          <div class="max-w-5xl mx-auto grid grid-cols-1 p-2 lg:max-w-6xl lg:grid-cols-3">
+            <div class="relative sm:mb-4 lg:mb-0 lg:col-span-1 sm:max-w-3xl sm:max-h-3xl">
+              <div id="map" style="height: 382px;" class="w-full h-full z-0 object-cover rounded-lg sm:col-span-full lg:col-span-full"></div>
+
+
+              <div class="absolute bottom-0 right-0 h-5 w-20 bg-black text-white px-2 text-sm"></div>
+              <div class="w-80 absolute bottom-6 p-3 z-50 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1">
+                <div onclick="locateUser()" class="max-w-[100px] w-full px-4">
+                    <div class="relative flex items-center bg-transparent rounded-full dark:border-gray-700 dark:bg-gray-200 border border-gray-900">
+                      <div class="flex items-center content-center bg-gray-900 w-full h-10 shadow p-4 mr-4 rounded-full opacity-50 hover:opacity-80">
+                        <p class="text-white dark:text-gray-800">Nearest pharmacy</p>
+                      </div>
+                      <div type="submit" class="ml-5 rounded-full">
+                          <svg class="text-teal-400 h-5 w-5 absolute top-2.5 right-3 fill-current dark:text-teal-300"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 434.17 434.17" xml:space="preserve" stroke="#000000" stroke-width="0.00434174">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <g>
+                                <path d="M217.087,119.397c-24.813,0-45,20.187-45,45s20.187,45,45,45s45-20.187,45-45S241.901,119.397,217.087,119.397z"></path>
+                                <path d="M217.087,0c-91.874,0-166.62,74.745-166.62,166.619c0,38.93,13.421,74.781,35.878,103.177l130.742,164.378l130.742-164.378 c22.457-28.396,35.878-64.247,35.878-103.177C383.707,74.745,308.961,0,217.087,0z M217.087,239.397c-41.355,0-75-33.645-75-75 s33.645-75,75-75s75,33.645,75,75S258.443,239.397,217.087,239.397z"></path>
+                              </g>
+                            </g>
+                          </svg>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="h-full text-sm leading-6 col-start-1 lg:mr-5 sm:col-span-2 lg:mt-0 lg:row-start-1 lg:row-end-7 lg:col-span-2 lg:self-stretch dark:text-slate-400">
+              <div id="default-carousel" class="relative rounded-lg overflow-hidden shadow-lg" data-carousel="static">
+                  <div id="pharmacy-list" class="relative h-80 md:h-96" data-carousel-inner>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item></div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item></div>
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item></div>
+                  </div>
+                  <button type="button"
+                      class="flex absolute top-1/2 left-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition"
+                      data-carousel-prev>
+                      <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                      </svg>
+                  </button>
+                  <button type="button"
+                      class="flex absolute top-1/2 right-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition"
+                      data-carousel-next>
+                      <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                  </button>
+            </div>
+          </div>
+        </div>
+
+          <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col items-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-10">Medicines</h2>
+            <div id="stock-list" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            </div>
+            <div class="mt-10 flex justify-center w-full">
+                <button id="more-button" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-10 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    More
+                </button>
+            </div>
+          </div>
+
+        </div>
+    </main>
+
+
+    <script src="/pharmacy/static/js/script.js"></script>
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<script>
+    const pharmacies = {{ pharmacies | safe }} || [];
+    const stocks = {{ stocks | safe }} || [];
+
+    var map = L.map('map').setView([35.2515, -3.9370], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {}).addTo(map);
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById("navbar_dropdown");
+        dropdown.classList.toggle("hidden");
+    }
+
+    function toggleReservationDropdown() {
+        const dropdown = document.getElementById("navbar_reservation_dropdown");
+        dropdown.classList.toggle("hidden");
+    }
+
+    function addMarkersFromDatabase(data) {
+        data.forEach(coord => {
+            const {latitude, longitude, name} = coord;
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(name);
+        });
+    }
+
+    function locateUser() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                console.log("User Location:", userLat, userLng);
+
+                map.setView([userLat, userLng], 13);
+                L.marker([userLat, userLng]).addTo(map)
+                    .bindPopup("Vous êtes ici.")
+                    .openPopup();
+
+                const closestPharmacies = Pharmacy.findClosestPharmacies(pharmacies, userLng, userLat);
+                console.log("Closest Pharmacies:", closestPharmacies);
+
+                Pharmacy.displayPharmacies(closestPharmacies);
+            }, function (error) {
+                alert("Impossible de récupérer votre position. Veuillez vérifier les paramètres de votre navigateur.");
+            });
+        } else {
+            alert("La géolocalisation n'est pas prise en charge par votre navigateur.");
+        }
+    }
+
+    class Pharmacy {
+        constructor(id, name, image, isOnline, longitude, latitude) {
+            this.id = id;
+            this.name = name;
+            this.image = image;
+            this.isOnline = isOnline;
+            this.longitude = longitude;
+            this.latitude = latitude;
+            this.distance = 0;
+        }
+
+        static calculateDistance(lat1, lon1, lat2, lon2) {
+            const toRadians = (degrees) => degrees * (Math.PI / 180);
+            const R = 6371;
+            const dLat = toRadians(lat2 - lat1);
+            const dLon = toRadians(lon2 - lon1);
+            const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                Math.sin(dLon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        static findClosestPharmacies(pharmacies, targetLongitude, targetLatitude) {
+            return pharmacies
+                .map(pharmacy => {
+                    pharmacy.distance = Pharmacy.calculateDistance(targetLatitude, targetLongitude, pharmacy.latitude, pharmacy.longitude);
+                    return pharmacy;
+                })
+                .sort((a, b) => a.distance - b.distance)
+                .slice(0, 6);
+        }
+
+        static displayPharmacies(pharmacies) {
+            const container = document.getElementById('pharmacy-list');
+            const parentDivs = container.querySelectorAll('[data-carousel-item]');
+
+            parentDivs.forEach(div => {
+                div.innerHTML = '';
+                div.classList.add('hidden');
+            });
+
+            pharmacies.forEach((pharmacy, index) => {
+                const parentIndex = Math.floor(index / 2);
+                if (parentIndex < parentDivs.length) {
+                    const parentDiv = parentDivs[parentIndex];
+                    parentDiv.classList.remove('hidden');
+                    let groupElement = parentDiv.querySelector('.grid');
+                    if (!groupElement) {
+                        groupElement = document.createElement('div');
+                        groupElement.classList.add('grid', 'grid-cols-2', 'gap-x-2', 'gap-y-10', 'lg:grid-cols-2', 'xl:grid-cols-2', 'xl:gap-x-2', 'p-5');
+                        parentDiv.appendChild(groupElement);
+                    }
+
+                    const pharmacyElement = document.createElement('a');
+                    pharmacyElement.href = `/${pharmacy.id}`;
+                    pharmacyElement.classList.add('relative', 'group');
+                    pharmacyElement.innerHTML = `
+                        <img src="${pharmacy.image}" alt="${pharmacy.name}" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                        <h2 class="absolute bottom-8 ml-5 text-lg text-gray-700"><strong>${pharmacy.name}</strong></h2>
+                        <h2 class="absolute bottom-2 ml-5 text-lg text-gray-700"><strong>Distance: ${pharmacy.distance.toFixed(2)} km, ${pharmacy.isOnline ? 'Online' : 'Offline'}</strong></h2>
+                    `;
+
+                    groupElement.appendChild(pharmacyElement);
+                }
+            });
+
+            console.log("Pharmacies displayed:", pharmacies);
+        }
+
+        static getRandomPharmacies(pharmacies, number = 8) {
+            const shuffled = pharmacies.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, number);
+        }
+    }
+
+    function loadPharmacies() {
+        if (!pharmacies || pharmacies.length === 0) {
+            console.error("No pharmacies data loaded from backend");
+            return;
+        }
+
+        addMarkersFromDatabase(pharmacies);
+        const randomPharmacies = Pharmacy.getRandomPharmacies(pharmacies, 6);
+        Pharmacy.displayPharmacies(randomPharmacies);
+    }
+
+    class Stock {
+        constructor(id, name, image, price, quantity) {
+            this.id = id;
+            this.name = name;
+            this.image = image;
+            this.price = price;
+            this.quantity = quantity;
+        }
+
+        static displayStocks(stocks) {
+            const container = document.getElementById('stock-list');
+
+            stocks.forEach((stock) => {
+                const stockElement = document.createElement('a');
+                stockElement.href = `/${stock.id}`;
+                stockElement.classList.add('group');
+                stockElement.innerHTML = `
+                     <img src="${ stock.image }" alt="${ stock.name }" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                     <h3 class="mt-4 text-sm text-gray-700">${ stock.name }</h3>
+                     <p class="mt-1 text-lg font-medium text-gray-900">Price: ${ stock.price }DH, Rest: ${ stock.quantity }</p>
+                `;
+                container.appendChild(stockElement);
+            });
+
+            console.log("Stocks displayed:", stocks);
+        }
+
+        static loadAndDisplayStocks(stocks, currentIndex, numberToLoad) {
+        const remainingStocks = stocks.slice(currentIndex, currentIndex + numberToLoad);
+
+        this.displayStocks(remainingStocks);
+        const newIndex = currentIndex + remainingStocks.length;
+        if (newIndex >= stocks.length) {
+            const moreButton = document.getElementById('more-button');
+            moreButton.disabled = true;
+            moreButton.innerText = "No more medicines";
+        }
+
+        return newIndex;
+    }
+        static getRandomStocks(stocks, number = 8) {
+            const shuffled = stocks.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, number);
+        }
+    }
+
+    let currentIndex = 0;
+    const numberToLoad = 8;
+    function loadStocks() {
+
+        if (!stocks || stocks.length === 0) {
+            console.error("No stocks data loaded from backend");
+            return;
+        }
+
+         currentIndex = Stock.loadAndDisplayStocks(stocks, currentIndex, numberToLoad);
+
+        // const randomStocks = Stock.getRandomStocks(stocks, 8);
+        // Stock.displayStocks(randomStocks);
+    }
+
+    window.onload = function () {
+        loadPharmacies();
+        loadStocks();
+    };
+
+    document.getElementById('more-button').addEventListener('click', () => {
+        loadStocks();
+    });
+
+</script>
+
+</body>
+</html>

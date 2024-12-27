@@ -16,6 +16,7 @@ class Pharmacy(models.Model):
     phone = fields.Char(string='Phone')
     description = fields.Text(string='Description')
     logo = fields.Binary(string='Logo')
+    distance = fields.Float(string='Distance', default=0.0)
     is_Online = fields.Boolean(string="Is Online", default=False)
 
     owner_id = fields.Many2one(

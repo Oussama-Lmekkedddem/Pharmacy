@@ -3,7 +3,7 @@
     <record id="client_action_form" model="ir.actions.act_window">
         <field name="name">Client</field>
         <field name="res_model">pharmacy.client</field>
-        <field name="view_mode">tree,form,kanban,search,graph</field>
+        <field name="view_mode">tree,form</field>
     </record>
     <menuitem id="main_menu" name="Pharmacy" />
     <menuitem id="menu_client" name="Client" parent="main_menu" action="client_action_form" />

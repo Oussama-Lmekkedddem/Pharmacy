@@ -12,7 +12,14 @@
         'views/owner_login.xml',
         'views/owner_logup.xml',
         'views/owner_page.xml',
+        'security/groups.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+            '/pharmacy/static/css/style.css',
+            '/pharmacy/static/js/script.js',
+        ],
+    },
     'installable': True,
     'application': True,
 }
@@ -20,3 +27,6 @@
 
 # 'views/menu.xml',
 # 'security/ir.model.access.csv',
+#    'views/client_login.xml',
+#         'views/client_logup.xml',
+#         'views/client_page.xml',

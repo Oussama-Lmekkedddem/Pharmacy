@@ -5,6 +5,7 @@ import re
 
 class Client(models.Model):
     _name = 'pharmacy.client'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Client'
 
     name = fields.Char(string='Name', required=True)
@@ -12,27 +13,27 @@ class Client(models.Model):
     password = fields.Char(string='Password', required=True)
     longitude = fields.Float(string='Longitude')
     latitude = fields.Float(string='Latitude')
-
     reservations = fields.One2many('pharmacy.reservation', 'client_id', string='Reservations')
 
     @api.model
     def create_client(self, name, email, password, longitude=None, latitude=None):
         """Create a client and validate required fields"""
-        # Validate required fields
         self.validate_name_fields(name)
         self.validate_email_fields(email)
         self.validate_password_fields(password)
+
+        if self.search([('email', '=', email)]):
+            raise ValidationError("A client with this email already exists.")
 
         client = self.create({
             'name': name,
             'email': email,
             'password': password,
             'longitude': longitude,
-            'latitude': latitude
+            'latitude': latitude,
         })
 
         client.message_post(body="Client created successfully.")
-
         return client
 
     # Update client

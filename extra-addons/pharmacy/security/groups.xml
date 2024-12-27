@@ -1,12 +1,15 @@
 <odoo>
-    <data>
-        <record id="pharmacy_admin_group" model="res.groups">
-            <field name="name">Pharmacy Admin</field>
+    <data noupdate="1">
+        <!-- Define Client Group -->
+        <record id="group_client" model="res.groups">
+            <field name="name">Client</field>
+            <field name="category_id" ref="base.module_category_user_type"/>
         </record>
 
-        <record id="pharmacy_owner_group" model="res.groups">
-            <field name="name">Pharmacy Owner</field>
+        <!-- Define Owner Group -->
+        <record id="group_owner" model="res.groups">
+            <field name="name">Owner</field>
+            <field name="category_id" ref="base.module_category_user_type"/>
         </record>
-
     </data>
 </odoo>

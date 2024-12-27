@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/pharmacy/static/css/tailwind.css">
+    <link rel="stylesheet" href="/pharmacy/static/css/style.css">
+    <title>Pharmacy Page</title>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <section class="mx-auto fixed z-50">
+      <!-- navbar -->
+    <nav class="flex justify-between bg-gray-900 text-white w-screen">
+      <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+        <a class="text-3xl font-bold font-heading" href="#">
+          <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+          PHARMA
+        </a>
+        <!-- Nav Links -->
+        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+          <li><a class="hover:text-gray-200" href="#">Home</a></li>
+          <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
+          <li><a class="hover:text-gray-200" href="#">Collections</a></li>
+          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
+        </ul>
+        <!-- Header Icons -->
+        <div class="hidden xl:flex items-center space-x-5 items-center">
+          <a class="hover:text-gray-200" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </a>
+          <a class="flex items-center hover:text-gray-200" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            <span class="flex absolute -mt-5 ml-4">
+              <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                </span>
+              </span>
+          </a>
+
+         <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
+                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+         </button>
+        </div>
+      </div>
+      <!-- Responsive navbar -->
+      <a class="xl:hidden flex mr-6 items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span class="flex absolute -mt-5 ml-4">
+          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+          </span>
+        </span>
+      </a>
+      <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </a>
+    </nav>
+    <div id="navbar_dropdown"
+         class="absolute left-0 z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+        <div class="px-4 py-3">
+            <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
+            <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+                <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            </li>
+        </ul>
+    </div>
+
+  </section>
+
+     <main class="flex-grow flex items-center justify-center mt-24 p-4">
+        <div class="bg-gray-100">
+            <div id="pharmacy-info" class="rounded-lg overflow-hidden shadow-lg pl-10 max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2">
+                <div id="pharmacy-header" class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1">
+                    <h1 id="pharmacy-name" class="mt-1 text-lg font-semibold text-black sm:text-slate-900 md:text-2xl dark:sm:text-white"></h1>
+                </div>
+                <div id="pharmacy-logo-container" class="bg-gray-300 grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0">
+                    <img id="pharmacy-logo" src="" alt="" class="w-full h-80 object-cover rounded-lg sm:col-span-2 lg:col-span-full" loading="lazy">
+                </div>
+                <dl id="pharmacy-details" class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
+                    <dt class="sr-only">Reviews</dt>
+                    <dd class="text-indigo-600 flex items-center dark:text-indigo-400">
+                      <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-1 stroke-current dark:stroke-indigo-500">
+                        <path d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <span>4.89 <span class="text-slate-400 font-normal">(128)</span></span>
+                    </dd>
+                    <dt class="sr-only">Location</dt>
+                    <dd id="pharmacy-location" class="flex items-center">
+                        <svg width="2" height="2" aria-hidden="true" fill="currentColor" class="mx-3 text-slate-300">
+                          <circle cx="1" cy="1" r="1" />
+                        </svg>
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 text-slate-400 dark:text-slate-500" aria-hidden="true">
+                            <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
+                            <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+                        </svg>
+                        <span id="pharmacy-city-country"></span>
+                    </dd>
+                    <dd id="pharmacy-phone" class="inline-flex items-center bg-transparent text-slate-400 text-xs font-medium px-2.5 py-0.5 dark:text-slate-500">
+                        <svg width="2" height="2" aria-hidden="true" fill="currentColor" class="mx-3 text-slate-300">
+                          <circle cx="1" cy="1" r="1" />
+                        </svg>
+                        <svg class="w-3 h-3 text-black dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
+                            <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"/>
+                        </svg>
+                        <span></span>
+                    </dd>
+                </dl>
+                <div id="pharmacy-availability" class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4">
+                    <span id="available-span" class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 hidden">
+                        <span class="w-2 h-2 me-1 mr-1 bg-green-500 rounded-full"></span>
+                        Available
+                    </span>
+                    <span id="unavailable-span" class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 hidden">
+                        <span class="w-2 h-2 mr-1 me-1 bg-red-500 rounded-full"></span>
+                        Unavailable
+                    </span>
+                </div>
+                <p id="pharmacy-description" class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 dark:text-slate-400"></p>
+            </div>
+
+            <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col items-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-10">Pharmacy Medicines</h2>
+                <div id="stock-list" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                </div>
+                <div class="mt-10 flex justify-center w-full">
+                    <button id="more-button" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-10 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        More
+                    </button>
+                </div>
+            </div>
+
+        </div>
+     </main>
+
+    <script src="/pharmacy/static/js/script.js"></script>
+    <script>
+        const pharmacy = {{ pharmacy | safe }} || [];
+        const stocks = {{ stocks | safe }} || [];
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById("navbar_dropdown");
+            dropdown.classList.toggle("hidden");
+        }
+
+        class Pharmacy {
+            constructor(id, name, country, city, phone, description, logo, isOnline) {
+                this.id = id;
+                this.name = name;
+                this.country = country;
+                this.city = city;
+                this.phone = phone;
+                this.description = description;
+                this.logo = logo;
+                this.isOnline = isOnline;
+            }
+
+            static displayPharmacy(pharmacy) {
+                const nameElement = document.getElementById('pharmacy-name');
+                nameElement.textContent = pharmacy.name;
+
+                const logoElement = document.getElementById('pharmacy-logo');
+                logoElement.src = pharmacy.logo;
+
+                const locationElement = document.getElementById('pharmacy-city-country');
+                locationElement.textContent = `${pharmacy.city}, ${pharmacy.country}`;
+
+                const phoneElement = document.getElementById('pharmacy-phone').lastElementChild;
+                phoneElement.textContent = pharmacy.phone;
+
+                const availableSpan = document.getElementById('available-span');
+                const unavailableSpan = document.getElementById('unavailable-span');
+                if (pharmacy.isOnline) {
+                    availableSpan.classList.remove('hidden');
+                    unavailableSpan.classList.add('hidden');
+                } else {
+                    availableSpan.classList.add('hidden');
+                    unavailableSpan.classList.remove('hidden');
+                }
+
+                const descriptionElement = document.getElementById('pharmacy-description');
+                descriptionElement.textContent = pharmacy.description;
+
+                console.log("Pharmacy displayed:", pharmacy);
+            }
+
+        }
+
+        function loadPharmacy() {
+            if (!pharmacy || pharmacy.length === 0) {
+                console.error("No pharmacy data loaded from backend");
+                return;
+            }
+            Pharmacy.displayPharmacy(pharmacy[0]);
+        }
+
+
+        class Stock {
+            constructor(id, name, image, price, quantity) {
+                this.id = id;
+                this.name = name;
+                this.image = image;
+                this.price = price;
+                this.quantity = quantity;
+            }
+
+            static displayStocks(stocks) {
+                const container = document.getElementById('stock-list');
+                stocks.forEach((stock) => {
+                    const stockElement = document.createElement('a');
+                    stockElement.href = `/${stock.id}`;
+                    stockElement.classList.add('group');
+                    stockElement.innerHTML = `
+                         <img src="${ stock.image }" alt="${ stock.name }" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                         <h3 class="mt-4 text-sm text-gray-700">${ stock.name }</h3>
+                         <p class="mt-1 text-lg font-medium text-gray-900">Price: ${ stock.price }DH, Rest: ${ stock.quantity }</p>
+                    `;
+                    container.appendChild(stockElement);
+                });
+                console.log("Stocks displayed:", stocks);
+            }
+
+            static loadAndDisplayStocks(stocks, currentIndex, numberToLoad) {
+                const remainingStocks = stocks.slice(currentIndex, currentIndex + numberToLoad);
+                this.displayStocks(remainingStocks);
+                const newIndex = currentIndex + remainingStocks.length;
+                if (newIndex >= stocks.length) {
+                    const moreButton = document.getElementById('more-button');
+                    moreButton.disabled = true;
+                    moreButton.innerText = "No more medicines";
+                }
+                return newIndex;
+            }
+        }
+
+        let currentIndex = 0;
+        const numberToLoad = 8;
+        function loadStocks() {
+
+            if (!stocks || stocks.length === 0) {
+                console.error("No stocks data loaded from backend");
+                return;
+            }
+             currentIndex = Stock.loadAndDisplayStocks(stocks, currentIndex, numberToLoad);
+        }
+
+
+        window.onload = function () {
+            loadPharmacy();
+            loadStocks();
+        };
+
+        document.getElementById('more-button').addEventListener('click', () => {
+          loadStocks();
+        });
+
+
+
+    </script>
+</body>
+</html>

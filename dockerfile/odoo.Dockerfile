@@ -1,5 +1,10 @@
 FROM odoo:16.0
 
+# Additional Python dependencies
+
+
+# COPY config/odoo.conf /etc/odoo/odoo.conf
+
 #
 #USER root
 #
