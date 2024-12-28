@@ -60,33 +60,21 @@ services:
     networks:
       - app-network
 
-#  angular-stack:
-#    container_name: angular-stack
-#    build:
-#      context: .
-#      dockerfile: dockerfile/angular.Dockerfile
-#    ports:
-#      - "4200:4200"
-#    depends_on:
-#      - postgres-stack
-#    networks:
-#      - app-network
-#
-#  nginx-stack:
-#    container_name: nginx-stack
-#    build:
-#      context: .
-#      dockerfile: dockerfile/nginx.Dockerfile
-#    ports:
-#      - "80:80"    # non-secure
-#      - "443:443"  # ssl
-#    depends_on:
-#      - odoo-stack
-#      - pgadmin-stack
-#      - angular-stack
-#    restart: always
-#    networks:
-#      - app-network
+  nginx-stack:
+    container_name: nginx-stack
+    build:
+      context: .
+      dockerfile: dockerfile/nginx.Dockerfile
+    volumes:
+      - ./extra-addons:/mnt/extra-addons
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - odoo-stack
+    restart: always
+    networks:
+      - app-network
 
 networks:
   app-network:

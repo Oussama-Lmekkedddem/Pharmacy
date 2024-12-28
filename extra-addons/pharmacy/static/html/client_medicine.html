@@ -8,76 +8,102 @@
     <title>Medicine Page</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-    <section class="mx-auto fixed z-50">
+    <section class="mx-auto fixed z-50 flex flex-col items-end">
+      <!-- navbar -->
         <nav class="flex justify-between bg-gray-900 text-white w-screen">
-      <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-        <a class="text-3xl font-bold font-heading" href="#">
-          <!-- <img class="h-9" src="logo.png" alt="logo"> -->
-          PHARMA
-        </a>
-        <!-- Nav Links -->
-        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-          <li><a class="hover:text-gray-200" href="#">Home</a></li>
-          <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
-          <li><a class="hover:text-gray-200" href="#">Collections</a></li>
-          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
-        </ul>
-        <!-- Header Icons -->
-        <div class="hidden xl:flex items-center space-x-5 items-center">
-          <a class="hover:text-gray-200" href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+            <a class="text-3xl font-bold font-heading" href="/client/client_page">
+              <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+              PHARMA
+            </a>
+            <!-- Nav Links -->
+            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+              <li><a class="hover:text-gray-200" href="/client/client_page">Home</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Pharmacy</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Medicine</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Reservation</a></li>
+            </ul>
+            <!-- Header Icons -->
+            <div class="hidden xl:flex items-center space-x-5 items-center">
+              <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleReservationDropdown()">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                <span class="flex absolute -mt-5 ml-4">
+                  <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                    </span>
+                  </span>
+              </button>
+
+             <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
+                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+             </button>
+            </div>
+          </div>
+          <!-- Responsive navbar -->
+          <a class="xl:hidden flex mr-6 items-center" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-          </a>
-          <a class="flex items-center hover:text-gray-200" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
             <span class="flex absolute -mt-5 ml-4">
               <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
-                </span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
               </span>
+            </span>
           </a>
-
-         <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
-                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-         </button>
-        </div>
-      </div>
-      <!-- Responsive navbar -->
-      <a class="xl:hidden flex mr-6 items-center" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        <span class="flex absolute -mt-5 ml-4">
-          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
-          </span>
-        </span>
-      </a>
-      <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-      </a>
-    </nav>
-        <div id="navbar_dropdown"
-         class="absolute left-0 z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
-        <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
-            <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
-        </div>
-        <ul class="py-2" aria-labelledby="user-menu-button">
-            <li>
-                <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-            </li>
-        </ul>
-    </div>
-     </section>
+          </a>
+        </nav>
+        <!-- dropdown element -->
+        <div class="absolute z-50 mt-24">
+               <div id="navbar_dropdown"
+                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                    <div class="px-4 py-3">
+                        <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
+                        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                        <li>
+                            <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                        </li>
+                    </ul>
+               </div>
+               <div id="navbar_reservation_dropdown"
+                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                    <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Medicine
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Amount
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Price
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <span class="sr-only">Delete</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservation-list">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+               </div>
+           </div>
+    </section>
 
     <main class="flex flex-grow items-center justify-center mt-24 p-4">
         <div class="bg-gray-100">
@@ -165,11 +191,12 @@
                                         $0.00</div>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-6">
-                                    <button id="medicine_id" data-medicine-id="1"
+                                    <button id="medicineStock_id"
+                                            data-medicine-id="1"
                                         class="text-center flex-1 px-3 py-3 rounded-full bg-indigo-500 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-600 hover:bg-indigo-600 hover:shadow-indigo-400">
                                         Book Now
                                     </button>
-                                    <a id="medicine-idPharmacy" href="/client/pharmacy/"
+                                    <a id="medicine-idPharmacy" href="/client/client_pharmacy/"
                                         class="text-center flex-1 px-3 py-3 rounded-full bg-indigo-500 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-600 hover:shadow-indigo-400">
                                         Pharmacy Page
                                     </a>
@@ -234,7 +261,8 @@
                         </dd>
                     </div>
 
-                    <form class="pt-2 pb-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" action="#">
+                    <form action="/client/add_reservation"  method="post"
+                          class="pt-2 pb-3 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <input type="hidden" name="medicineId">
                         <input type="hidden" name="amount">
                         <input type="hidden" name="price">
@@ -242,7 +270,7 @@
                             <label for="message" class="w-full h-full">Your message</label>
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+                            <textarea id="message" name="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
                         </dd>
                         <button type="submit"
                                 class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
@@ -259,13 +287,17 @@
 
         const medicine = {{ medicine | safe }} || [];
         const stocks = {{ stocks | safe }} || [];
+        const reservations = {{ reservations | safe }} || [];
 
         function toggleDropdown() {
             const dropdown = document.getElementById("navbar_dropdown");
             dropdown.classList.toggle("hidden");
         }
 
-
+        function toggleReservationDropdown() {
+            const dropdown = document.getElementById("navbar_reservation_dropdown");
+            dropdown.classList.toggle("hidden");
+        }
 
         class Medicine {
             constructor(id, idPharmacy, name, forme, presentation, composition, dosage, unitDosage, image, price, amount) {
@@ -284,8 +316,11 @@
 
 
             static displayMedicine(medicine) {
-                // const idElement = document.getElementById('medicine-id');
-                // idElement.textContent = medicine.id;
+                const idElement = document.getElementById('medicineStock_id');
+                if (idElement) {
+                    idElement.setAttribute('data-medicine-id',medicine.id);
+                }
+
 
                 const nameElement = document.getElementById('medicine-name');
                 nameElement.textContent = medicine.name;
@@ -391,13 +426,12 @@
             }
         }
 
-
          function loadMedicine() {
             if (!medicine || medicine.length === 0) {
                 console.error("No medicine data loaded from backend");
                 return;
             }
-            Medicine.displayMedicine(medicine[0]);
+            Medicine.displayMedicine(medicine);
         }
 
         class Stock {
@@ -413,7 +447,7 @@
                 const container = document.getElementById('stock-list');
                 stocks.forEach((stock) => {
                     const stockElement = document.createElement('a');
-                    stockElement.href = `/${stock.id}`;
+                    stockElement.href = `/client/client_medicine/${stock.id}`;
                     stockElement.classList.add('group');
                     stockElement.innerHTML = `
                          <img src="${ stock.image }" alt="${ stock.name }" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
@@ -496,23 +530,62 @@
             reservationDiv.classList.add('hidden');
         }
 
-        document.getElementById('medicine_id').addEventListener('click', () => {
+        document.getElementById('medicineStock_id').addEventListener('click', () => {
             // Example medicine data
             const medicineName = document.getElementById('medicine-name').textContent;
             const amount = document.getElementById('medicine-quantity').value;
             const totalPrice = document.getElementById('medicine-total').textContent.replace('$', '');
-            const medicineId = document.getElementById('medicine_id').dataset.medicineId;
+            const medicineId = document.getElementById('medicineStock_id').dataset.medicineId;
 
             addMedicineToReservation(medicineName, amount, totalPrice, medicineId);
         });
 
+        class Reservation {
+            constructor(id, name, amount, price) {
+                this.id = id;
+                this.name = name;
+                this.amount = amount;
+                this.price = price;
+            }
 
+            static displayReservations(reservations) {
+                const container = document.getElementById('reservation-list');
+                reservations.forEach((reservation) => {
+                    const reservationElement = document.createElement('tr');
+                    reservationElement.classList.add('bg-white', 'border-b', 'dark:bg-gray-800', 'dark:border-gray-700', 'hover:bg-gray-50', 'dark:hover:bg-gray-600');
+                    reservationElement.innerHTML = `
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        ${reservation.name}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        ${reservation.amount}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        $${reservation.price}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <a href="/client/delete_reservation/${reservation.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                    </td>
+                    `;
+                    container.appendChild(reservationElement);
+                });
+                console.log("Reservations displayed:", reservations);
+            }
+        }
 
+        function loadReservations() {
+            if (!reservations || reservations.length === 0) {
+                console.error("No reservations data loaded from backend");
+                return;
+            }
+             Reservation.displayReservations(reservations);
+        }
 
 
         window.onload = function () {
             loadMedicine();
             loadStocks();
+            loadReservations();
         };
 
         document.getElementById('more-button').addEventListener('click', () => {

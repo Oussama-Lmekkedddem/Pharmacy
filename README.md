@@ -1,6 +1,6 @@
 # Pharmacy System
 
-This project is a **Pharmacy Management System** built using **Angular** for the frontend, **Odoo** for managing pharmacy processes, **PostgreSQL** for the database, **PGAdmin** for database management, and **Nginx** as a reverse proxy.
+This project is a **Pharmacy Management System** built using **Odoo** for managing pharmacy processes, **PostgreSQL** for the database, **PGAdmin** for database management, and **Nginx** as a reverse proxy.
 
 The system is designed for three main user roles:
 - **Admin**: Manages the overall pharmacy system.
@@ -14,9 +14,6 @@ The system is designed for three main user roles:
 Before starting, make sure you have the following installed:
 - **Docker Desktop**: To run the containers.
   - [Download Docker Desktop](https://www.docker.com/products/docker-desktop) based on your OS.
-- **Git**: To pull or push the project code.
-  - [Download Git](https://git-scm.com/downloads)
-
 ---
 
 ## Project Setup
@@ -30,19 +27,9 @@ git clone https://github.com/Oussama-Lmekkedddem/Pharmacy.git
 cd pharmacy
 ```
 
-### 2. Create a New Environment
+### 2. Build and Run with Docker Compose
 
-If needed, create a new environment for the project:
-```bash
-# (Optional) Create a new environment for the project
-python -m venv pharmacy-venv
-source pharmacy-venv/bin/activate  # For Linux/MacOS
-pharmacy-venv\Scripts\activate     # For Windows
-```
-
-### 3. Build and Run with Docker Compose
-
-In the project root directory, you’ll find a `docker-compose.yml` file that sets up all necessary services for the Pharmacy System, including the **Angular app**, **Odoo**, **PostgreSQL**, **PGAdmin**, and **Nginx**.
+In the project root directory, you’ll find a `docker-compose.yml` file that sets up all necessary services for the Pharmacy System, including the **Odoo**, **PostgreSQL**, **PGAdmin**, and **Nginx**.
 
 Run the following command to build and start all the services:
 
@@ -53,20 +40,14 @@ This will:
 
 - Build the Docker images (if not already built).
 - Start all the services:
-  - **Angular**: Frontend application.
   - **Odoo**: ERP system for managing pharmacy operations.
   - **PostgreSQL**: Database for data storage.
   - **PGAdmin**: Database management tool.
   - **Nginx**: Reverse proxy server.
 
-### 4. Application Access Instructions
+### 3. Application Access Instructions
 
 After running the Docker containers for the application, you can access the different services via the following links:
-
-#### Angular Application
-- Access the Angular application at:  
-  [http://localhost:4200/](http://localhost:4200/)  
-  This will serve the frontend application.
 
 #### PGAdmin
 - Access PGAdmin at:  
@@ -81,11 +62,11 @@ After running the Docker containers for the application, you can access the diff
 ---
 
 #### Notes:
-- The services are running on different ports (`4200`, `8080`, and `8069`) and are accessible via their respective URLs.
+- The services are running on different port (`8069`) and are accessible via their respective URLs.
 - If you have set up a reverse proxy with Nginx, the services may be mapped to different paths on the same `localhost`, such as:
-  - **Angular**: [http://localhost/](http://localhost/)
-  - **PGAdmin**: [http://localhost/data](http://localhost/data)
-  - **Odoo**: [http://localhost/owner](http://localhost/owner)
+  - **admin**: [http://localhost/](http://localhost/)
+  - **owner**: [http://localhost/owner/login](http://localhost/owner/login)
+  - **client**: [http://localhost/client/login](http://localhost/client/login)
 
 ---
 
@@ -109,10 +90,32 @@ docker-compose up --build
 ```
 
 
-Credentials:
+## Project Setup and Access Information
 
-- **Username**: odoo
-- **Password**: odoo
+### PgAdmin Access
+To access PgAdmin, use the following credentials:
+
+- **Email**: `admin@localhost.com`
+- **Password**: `admin`
+
+### Connecting to PostgreSQL in PgAdmin
+To visualize your Odoo data in PgAdmin, follow these steps to create a new server:
+
+1. **Server Name**: Choose a name, e.g., `ODOO`.
+2. **Host**: `postgres-stack`.
+3. **Port**: `5432`.
+4. **Maintenance Database**: `postgres`.
+5. **Username**: `odoo`.
+6. **Password**: `odoo`.
+
+### Odoo Database Configuration
+The PostgreSQL database for Odoo is pre-configured with the following settings:
+
+- **Database Name**: `odoo`.
+- **Username**: `odoo`.
+- **Password**: `odoo`.
+
+---
 
 ## Additional Information
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_action_form" model="ir.actions.act_window">
+        <field name="name">Stock</field>
+        <field name="res_model">pharmacy.stock</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="main_menu" name="Stock" />
+    <menuitem id="menu_stock" name="Stock" parent="main_menu" action="stock_action_form" />
+
+</odoo>

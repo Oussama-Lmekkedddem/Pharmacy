@@ -4,7 +4,6 @@ from odoo.exceptions import ValidationError
 from odoo.http import request
 from jinja2 import Template
 import json
-
 import os
 
 class ClientController(http.Controller):
@@ -53,7 +52,6 @@ class ClientController(http.Controller):
                     "csrf_token": csrf_token,
                 })
 
-            # Search for the client with the provided email and password
             client = request.env['pharmacy.client'].sudo().search(
                 [('email', '=', email), ('password', '=', password)], limit=1)
 
@@ -69,7 +67,6 @@ class ClientController(http.Controller):
 
         return self.render_static_html("client_login.html", {"csrf_token": csrf_token})
 
-
     @http.route('/client/client_page', type='http', auth='user', website=True)
     def client_page(self):
         client_id = http.request.session.get('client_id')
@@ -80,117 +77,46 @@ class ClientController(http.Controller):
         if not client.exists():
             return request.redirect('/client/login')
 
-        # Récupérer les données des pharmacies
-        # pharmacies = request.env['pharmacy.pharmacy'].sudo().search([])
-        # pharmacy_data = [{
-        #     'id': pharmacy.id,
-        #     'name': pharmacy.name,
-        #     'image': pharmacy.image_url or "/pharmacy/static/logo/default_pharmacy_logo.png",
-        #     'is_online': pharmacy.is_online,
-        #     'longitude': pharmacy.longitude,
-        #     'latitude': pharmacy.latitude
-        # } for pharmacy in pharmacies]
+        initPharmacies = request.env['pharmacy.pharmacy'].sudo().search([])
+        pharmacies = [{
+            'id': pharmacy.id,
+            'name': pharmacy.name,
+            'image': f"/web/image/pharmacy.pharmacy/{pharmacy.id}/logo" if pharmacy.logo else "/pharmacy/static/logo/default_pharmacy_logo.png",
+            'is_online': pharmacy.is_Online,
+            'longitude': pharmacy.longitude,
+            'latitude': pharmacy.latitude,
+            'distance': pharmacy.distance,
+        } for pharmacy in initPharmacies]
 
-        pharmacies = [
-            {
-                'id': 1,
-                'name': "Pharmacie Al Hoceima",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': True,
-                'longitude': -3.9370,
-                'latitude': 35.2515,
-                'distance': 0,
-            },
-            {
-                'id': 2,
-                'name': "Pharmacie Fatima",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': True,
-                'longitude': -3.9400,
-                'latitude': 35.2600,
-                'distance': 0,
-            },
-            {
-                'id': 3,
-                'name': "Pharmacie Centrale",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': False,
-                'longitude': -3.9350,
-                'latitude': 35.2540,
-                'distance': 0,
-            },
-            {
-                'id': 4,
-                'name': "Pharmacie Amine",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': True,
-                'longitude': -3.9325,
-                'latitude': 35.2530,
-                'distance': 0,
-            },
-            {
-                'id': 5,
-                'name': "Pharmacie Atlas",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': False,
-                'longitude': -3.9380,
-                'latitude': 35.2500,
-                'distance': 0,
-            },
-            {
-                'id': 6,
-                'name': "Pharmacie Rif",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': True,
-                'longitude': -3.9405,
-                'latitude': 35.2520,
-                'distance': 0,
-            },
-            {
-                'id': 7,
-                'name': "Pharmacie Florale",
-                'image': "/pharmacy/static/logo/default_pharmacy_logo.png",
-                'is_online': True,
-                'longitude': -3.9390,
-                'latitude': 35.2580,
-                'distance': 0,
-            }
-        ]
-        stocks = [
-            {"id": 1, "name": "Medicine A", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 10.5,
-             "quantity": 50},
-            {"id": 2, "name": "Medicine B", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 15.0,
-             "quantity": 100},
-            {"id": 3, "name": "Medicine C", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 7.2,
-             "quantity": 25},
-            {"id": 4, "name": "Medicine D", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 20.0,
-             "quantity": 40},
-            {"id": 5, "name": "Medicine E", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 12.0,
-             "quantity": 80},
-            {"id": 6, "name": "Medicine F", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 9.5,
-             "quantity": 60},
-            {"id": 7, "name": "Medicine G", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 14.0,
-             "quantity": 120},
-            {"id": 8, "name": "Medicine H", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 11.3,
-             "quantity": 30},
-            {"id": 9, "name": "Medicine I", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 13.7,
-             "quantity": 90},
-            {"id": 10, "name": "Medicine J", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 8.0,
-             "quantity": 70},
-            {"id": 11, "name": "Medicine K", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 6.5,
-             "quantity": 150},
-            {"id": 12, "name": "Medicine L", "image": "/pharmacy/static/image/default_medicine_image.png",
-             "price": 18.0, "quantity": 20},
-        ]
+        initStocks = request.env['pharmacy.stock'].sudo().search([])
+        stocks = [{
+            'id': stock.id,
+            'name': stock.medicine_id.name,
+            'image': f"/web/image/{stock.medicine_id.images[0].id}"
+             if stock.medicine_id.images else
+             "/pharmacy/static/image/default_medicine_image.png",
+            'price': stock.price,
+            'quantity': stock.quantity,
+        } for stock in initStocks]
+
+        initReservations = request.env['pharmacy.reservation'].sudo().search([('client_id', '=', client_id)])
+        reservations = [{
+            'id': reservation.id,
+            'name': reservation.stock_id.medicine_id.name,
+            'amount': reservation.quantity,
+            'price': reservation.price,
+        } for reservation in initReservations]
+
 
         return self.render_static_html("client_page.html", {
             'client': client,
             'pharmacies': json.dumps(pharmacies),
             'stocks': json.dumps(stocks),
+            'reservations': json.dumps(reservations),
         })
 
-    @http.route('/client/client_medicine', type='http', auth='user', website=True)
-    def client_medicine(self):
+    @http.route('/client/client_medicine/<int:medicine_id>', type='http', auth='user', website=True)
+    def client_medicine(self, medicine_id):
         client_id = http.request.session.get('client_id')
         if not client_id:
             return request.redirect('/client/login')
@@ -199,59 +125,53 @@ class ClientController(http.Controller):
         if not client.exists():
             return request.redirect('/client/login')
 
-        medicine = [
-            {'id': 1,
-             'idPharmacy': 10,
-             'name': "Paracetamol",
-             'forme': "Tablet",
-             'presentation': "This medicine is presented in a box containing 10 tablets. Each tablet is individually "
-                             "sealed within a blister pack to ensure hygiene and protection against environmental "
-                             "factors such as humidity and contamination. The box includes detailed usage instructions,"
-                             " dosage recommendations, and information about the active ingredients. Suitable for single"
-                             " or multiple-dose regimens, this packaging is designed for easy handling and storage.",
-             'composition': "Paracetamol 500mg",
-             'dosage': "500",
-             'unitDosage': "mg",
-             'image': "/pharmacy/static/image/default_medicine_image.png",
-             'price': 10,
-             'amount': 15}
-        ]
+        initMedicine = request.env['pharmacy.stock'].sudo().browse(medicine_id)
+        if not initMedicine.exists():
+            return request.not_found()
+        medicine = {
+            'id': initMedicine.id,
+            'idPharmacy': initMedicine.pharmacy_id.id,
+            'name': initMedicine.medicine_id.name,
+            'forme': initMedicine.medicine_id.forme,
+            'presentation': initMedicine.medicine_id.presentation,
+            'composition': initMedicine.medicine_id.composition,
+            'dosage': initMedicine.medicine_id.dosage,
+            'unitDosage': initMedicine.medicine_id.unit_dosage,
+            'image': f"/web/image/{initMedicine.medicine_id.images[0].id}"
+             if initMedicine.medicine_id.images else
+            "/pharmacy/static/image/default_medicine_image.png",
+            'price': initMedicine.price,
+            'amount': initMedicine.quantity,
+        }
 
-        stocks = [
-            {"id": 1, "name": "Medicine A", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 10.5,
-             "quantity": 50},
-            {"id": 2, "name": "Medicine B", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 15.0,
-             "quantity": 100},
-            {"id": 3, "name": "Medicine C", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 7.2,
-             "quantity": 25},
-            {"id": 4, "name": "Medicine D", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 20.0,
-             "quantity": 40},
-            {"id": 5, "name": "Medicine E", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 12.0,
-             "quantity": 80},
-            {"id": 6, "name": "Medicine F", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 9.5,
-             "quantity": 60},
-            {"id": 7, "name": "Medicine G", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 14.0,
-             "quantity": 120},
-            {"id": 8, "name": "Medicine H", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 11.3,
-             "quantity": 30},
-            {"id": 9, "name": "Medicine I", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 13.7,
-             "quantity": 90},
-            {"id": 10, "name": "Medicine J", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 8.0,
-             "quantity": 70},
-            {"id": 11, "name": "Medicine K", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 6.5,
-             "quantity": 150},
-            {"id": 12, "name": "Medicine L", "image": "/pharmacy/static/image/default_medicine_image.png",
-             "price": 18.0, "quantity": 20},
-        ]
+        initStocks = request.env['pharmacy.stock'].sudo().search([])
+        stocks = [{
+            'id': stock.id,
+            'name': stock.medicine_id.name,
+            'image': f"/web/image/{stock.medicine_id.images[0].id}"
+             if stock.medicine_id.images else
+            "/pharmacy/static/image/default_medicine_image.png",
+            'price': stock.price,
+            'quantity': stock.quantity,
+        } for stock in initStocks]
+
+        initReservations = request.env['pharmacy.reservation'].sudo().search([('client_id', '=', client_id)])
+        reservations = [{
+            'id': reservation.id,
+            'name': reservation.stock_id.medicine_id.name,
+            'amount': reservation.quantity,
+            'price': reservation.price,
+        } for reservation in initReservations]
 
         return self.render_static_html("client_medicine.html", {
             'client': client,
             'medicine': json.dumps(medicine),
             'stocks': json.dumps(stocks),
+            'reservations': json.dumps(reservations),
         })
 
-    @http.route('/client/client_pharmacy', type='http', auth='user', website=True)
-    def client_pharmacy(self):
+    @http.route('/client/client_pharmacy/<int:pharmacy_id>', type='http', auth='user', website=True)
+    def client_pharmacy(self, pharmacy_id):
         client_id = http.request.session.get('client_id')
         if not client_id:
             return request.redirect('/client/login')
@@ -260,47 +180,94 @@ class ClientController(http.Controller):
         if not client.exists():
             return request.redirect('/client/login')
 
-        pharmacy = [
-            {'id': 1,
-             'name': "Pharmacie Al Hoceima",
-             'country': "Morocco",
-             'city': "Casablanca",
-             'phone': "+212612345678",
-             'description': "This sunny and spacious room is for those traveling light and looking for a comfy and cosy place to lay their head for a night or two. This beach house sits in a vibrant neighborhood littered with cafes, pubs, restaurants and supermarkets and is close to all the major attractions such as Edinburgh Castle and Arthur's Seat.",
-             'logo': "/pharmacy/static/logo/default_pharmacy_logo.png",
-             'isOnline': True}
-        ]
+        initPharmacy = request.env['pharmacy.pharmacy'].sudo().browse(pharmacy_id)
+        if not initPharmacy.exists():
+            return request.not_found()
+        pharmacy = {
+            'id': initPharmacy.id,
+            'name': initPharmacy.name,
+            'country': initPharmacy.country if initPharmacy.country else "N/A",
+            'city': initPharmacy.city or "N/A",
+            'phone': initPharmacy.phone or "N/A",
+            'description': initPharmacy.description or "No description available.",
+            'logo': f"/web/image/pharmacy.pharmacy/{initPharmacy.id}/logo" if initPharmacy.logo else "/pharmacy/static/logo/default_pharmacy_logo.png",
+            'isOnline': initPharmacy.is_Online,
+        }
 
-        stocks = [
-            {"id": 1, "name": "Medicine A", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 10.5,
-             "quantity": 50},
-            {"id": 2, "name": "Medicine B", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 15.0,
-             "quantity": 100},
-            {"id": 3, "name": "Medicine C", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 7.2,
-             "quantity": 25},
-            {"id": 4, "name": "Medicine D", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 20.0,
-             "quantity": 40},
-            {"id": 5, "name": "Medicine E", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 12.0,
-             "quantity": 80},
-            {"id": 6, "name": "Medicine F", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 9.5,
-             "quantity": 60},
-            {"id": 7, "name": "Medicine G", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 14.0,
-             "quantity": 120},
-            {"id": 8, "name": "Medicine H", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 11.3,
-             "quantity": 30},
-            {"id": 9, "name": "Medicine I", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 13.7,
-             "quantity": 90},
-            {"id": 10, "name": "Medicine J", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 8.0,
-             "quantity": 70},
-            {"id": 11, "name": "Medicine K", "image": "/pharmacy/static/image/default_medicine_image.png", "price": 6.5,
-             "quantity": 150},
-            {"id": 12, "name": "Medicine L", "image": "/pharmacy/static/image/default_medicine_image.png",
-             "price": 18.0, "quantity": 20},
-        ]
+        initStocks = request.env['pharmacy.stock'].sudo().search([('pharmacy_id', '=', pharmacy_id)])
+        stocks = [{
+            'id': stock.id,
+            'name': stock.medicine_id.name,
+            'image': f"/web/image/{stock.medicine_id.images[0].id}"
+             if stock.medicine_id.images else
+            "/pharmacy/static/image/default_medicine_image.png",
+            'price': stock.price,
+            'quantity': stock.quantity,
+        } for stock in initStocks]
+
+        initReservations = request.env['pharmacy.reservation'].sudo().search([('client_id', '=', client_id)])
+        reservations = [{
+            'id': reservation.id,
+            'name': reservation.stock_id.medicine_id.name,
+            'amount': reservation.quantity,
+            'price': reservation.price,
+        } for reservation in initReservations]
 
 
         return self.render_static_html("client_pharmacy.html", {
             'client': client,
             'pharmacy': json.dumps(pharmacy),
             'stocks': json.dumps(stocks),
+            'reservations': json.dumps(reservations),
         })
+
+    @http.route('/client/add_reservation', type='http', auth='public', csrf=False,  website=True, methods=['GET', 'POST'])
+    def client_NewReservation(self, **kwargs):
+        client_id = http.request.session.get('client_id')
+        if not client_id:
+            return request.redirect('/client/login')
+        client = request.env['pharmacy.client'].sudo().browse(client_id)
+        if not client.exists():
+            return request.redirect('/client/login')
+
+        if request.httprequest.method == 'POST':
+            medicineId = kwargs.get('medicineId')
+            amount = kwargs.get('amount')
+            price = kwargs.get('price')
+            message = kwargs.get('message')
+
+            if not medicineId or not amount or not price:
+                return request.redirect(f'/client/client_medicine/{medicineId}?error=missing_fields')
+
+            try:
+                amount = int(amount)
+                price = float(price)
+
+                request.env['pharmacy.reservation'].sudo().create_reservation(client_id, medicineId, amount, price,
+                                                                              message)
+                return request.redirect(f'/client/client_medicine/{medicineId}')
+            except Exception as e:
+                return request.redirect(f'/client/client_medicine/{medicineId}')
+
+        return request.redirect(request.httprequest.referrer or '/client/client_page')
+
+    @http.route('/client/delete_reservation/<int:reservation_id>', type='http', auth='user', website=True)
+    def delete_reservation(self, reservation_id, **kwargs):
+        client_id = http.request.session.get('client_id')
+        if not client_id:
+            return request.redirect('/client/login')
+        client = request.env['pharmacy.client'].sudo().browse(client_id)
+        if not client.exists():
+            return request.redirect('/client/login')
+
+        reservation = request.env['pharmacy.reservation'].sudo().browse(reservation_id)
+        if not reservation.exists() or reservation.client_id.id != client_id:
+            return request.not_found()
+
+        try:
+            request.env['pharmacy.reservation'].sudo().delete_reservation(reservation_id)
+        except Exception as e:
+            return request.redirect(request.httprequest.referrer or '/client/home')
+
+        return request.redirect(request.httprequest.referrer or '/client/client_page')
+

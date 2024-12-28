@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pharmacy_action_form" model="ir.actions.act_window">
+        <field name="name">Pharmacy</field>
+        <field name="res_model">pharmacy.pharmacy</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="main_menu" name="Pharmacy" />
+    <menuitem id="menu_pharmacy" name="Pharmacy" parent="main_menu" action="pharmacy_action_form" />
+
+</odoo>

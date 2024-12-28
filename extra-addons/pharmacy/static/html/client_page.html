@@ -9,161 +9,102 @@
     <title>Client Page</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-   <section class="mx-auto fixed z-50 flex flex-col items-end">
+  <section class="mx-auto fixed z-50 flex flex-col items-end">
       <!-- navbar -->
-    <nav class="flex justify-between bg-gray-900 text-white w-screen">
-      <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-        <a class="text-3xl font-bold font-heading" href="#">
-          <!-- <img class="h-9" src="logo.png" alt="logo"> -->
-          PHARMA
-        </a>
-        <!-- Nav Links -->
-        <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-          <li><a class="hover:text-gray-200" href="#">Home</a></li>
-          <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
-          <li><a class="hover:text-gray-200" href="#">Collections</a></li>
-          <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
-        </ul>
-        <!-- Header Icons -->
-        <div class="hidden xl:flex items-center space-x-5 items-center">
-          <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleReservationDropdown()">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+        <nav class="flex justify-between bg-gray-900 text-white w-screen">
+          <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+            <a class="text-3xl font-bold font-heading" href="/client/client_page">
+              <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+              PHARMA
+            </a>
+            <!-- Nav Links -->
+            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+              <li><a class="hover:text-gray-200" href="/client/client_page">Home</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Pharmacy</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Medicine</a></li>
+              <li><a class="hover:text-gray-200" href="/client/client_page">Reservation</a></li>
+            </ul>
+            <!-- Header Icons -->
+            <div class="hidden xl:flex items-center space-x-5 items-center">
+              <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleReservationDropdown()">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                <span class="flex absolute -mt-5 ml-4">
+                  <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                    </span>
+                  </span>
+              </button>
+
+             <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
+                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+             </button>
+            </div>
+          </div>
+          <!-- Responsive navbar -->
+          <a class="xl:hidden flex mr-6 items-center" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
             <span class="flex absolute -mt-5 ml-4">
               <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
-                </span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
               </span>
-          </button>
-
-         <button type="button" class="flex items-center hover:text-gray-200" onclick="toggleDropdown()"
-                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </span>
+          </a>
+          <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-         </button>
-        </div>
-      </div>
-      <!-- Responsive navbar -->
-      <a class="xl:hidden flex mr-6 items-center" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        <span class="flex absolute -mt-5 ml-4">
-          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
-          </span>
-        </span>
-      </a>
-      <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-      </a>
-    </nav>
-    <!-- dropdown element -->
-    <div class="absolute z-50 mt-24">
-           <div id="navbar_dropdown"
-                 class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
-                <div class="px-4 py-3">
-                    <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
-                    <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
-                </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                        <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-                    </li>
-                </ul>
+          </a>
+        </nav>
+        <!-- dropdown element -->
+        <div class="absolute z-50 mt-24">
+               <div id="navbar_dropdown"
+                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                    <div class="px-4 py-3">
+                        <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
+                        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                        <li>
+                            <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                        </li>
+                    </ul>
+               </div>
+               <div id="navbar_reservation_dropdown"
+                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                    <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Medicine
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Amount
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Price
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <span class="sr-only">Delete</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservation-list">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+               </div>
            </div>
-           <div id="navbar_reservation_dropdown"
-                 class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
-                <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Product name
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Color
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Category
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Price
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <span class="sr-only">View</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Apple MacBook Pro 17"
-                                </th>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    Laptop
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Microsoft Surface Pro
-                                </th>
-                                <td class="px-6 py-4">
-                                    White
-                                </td>
-                                <td class="px-6 py-4">
-                                    Laptop PC
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                                </td>
-                            </tr>
-                            <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Magic Mouse 2
-                                </th>
-                                <td class="px-6 py-4">
-                                    Black
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-           </div>
-       </div>
-
-
-
-
-
-
-  </section>
+    </section>
 
     <main class="flex-grow flex items-center justify-center mt-24">
         <div class="bg-gray-100">
@@ -171,8 +112,7 @@
             <div class="relative sm:mb-4 lg:mb-0 lg:col-span-1 sm:max-w-3xl sm:max-h-3xl">
               <div id="map" style="height: 382px;" class="w-full h-full z-0 object-cover rounded-lg sm:col-span-full lg:col-span-full"></div>
 
-
-              <div class="absolute bottom-0 right-0 h-5 w-20 bg-black text-white px-2 text-sm"></div>
+              <div class="hidden absolute bottom-0 right-0 h-5 w-20 bg-black text-white px-2 text-sm"></div>
               <div class="w-80 absolute bottom-6 p-3 z-50 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1">
                 <div onclick="locateUser()" class="max-w-[100px] w-full px-4">
                     <div class="relative flex items-center bg-transparent rounded-full dark:border-gray-700 dark:bg-gray-200 border border-gray-900">
@@ -245,9 +185,10 @@
 <script>
     const pharmacies = {{ pharmacies | safe }} || [];
     const stocks = {{ stocks | safe }} || [];
+    const reservations = {{ reservations | safe }} || [];
 
     var map = L.map('map').setView([35.2515, -3.9370], 13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {}).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {}).addTo(map);
 
     function toggleDropdown() {
         const dropdown = document.getElementById("navbar_dropdown");
@@ -347,7 +288,7 @@
                     }
 
                     const pharmacyElement = document.createElement('a');
-                    pharmacyElement.href = `/${pharmacy.id}`;
+                    pharmacyElement.href = `/client/client_pharmacy/${pharmacy.id}`;
                     pharmacyElement.classList.add('relative', 'group');
                     pharmacyElement.innerHTML = `
                         <img src="${pharmacy.image}" alt="${pharmacy.name}" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
@@ -367,6 +308,7 @@
             return shuffled.slice(0, number);
         }
     }
+
 
     function loadPharmacies() {
         if (!pharmacies || pharmacies.length === 0) {
@@ -393,7 +335,7 @@
 
             stocks.forEach((stock) => {
                 const stockElement = document.createElement('a');
-                stockElement.href = `/${stock.id}`;
+                stockElement.href = `/client/client_medicine/${stock.id}`;
                 stockElement.classList.add('group');
                 stockElement.innerHTML = `
                      <img src="${ stock.image }" alt="${ stock.name }" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
@@ -440,9 +382,51 @@
         // Stock.displayStocks(randomStocks);
     }
 
+    class Reservation {
+            constructor(id, name, amount, price) {
+                this.id = id;
+                this.name = name;
+                this.amount = amount;
+                this.price = price;
+            }
+
+            static displayReservations(reservations) {
+                const container = document.getElementById('reservation-list');
+                reservations.forEach((reservation) => {
+                    const reservationElement = document.createElement('tr');
+                    reservationElement.classList.add('bg-white', 'border-b', 'dark:bg-gray-800', 'dark:border-gray-700', 'hover:bg-gray-50', 'dark:hover:bg-gray-600');
+                    reservationElement.innerHTML = `
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        ${reservation.name}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        ${reservation.amount}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        $${reservation.price}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <a href="/client/delete_reservation/${reservation.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                    </td>
+                    `;
+                    container.appendChild(reservationElement);
+                });
+                console.log("Reservations displayed:", reservations);
+            }
+        }
+
+    function loadReservations() {
+            if (!reservations || reservations.length === 0) {
+                console.error("No reservations data loaded from backend");
+                return;
+            }
+             Reservation.displayReservations(reservations);
+        }
+
     window.onload = function () {
         loadPharmacies();
         loadStocks();
+        loadReservations();
     };
 
     document.getElementById('more-button').addEventListener('click', () => {

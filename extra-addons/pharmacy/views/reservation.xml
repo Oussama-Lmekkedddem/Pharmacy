@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reservation_action_form" model="ir.actions.act_window">
+        <field name="name">Reservation</field>
+        <field name="res_model">pharmacy.reservation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="main_menu" name="Reservation" />
+    <menuitem id="menu_reservation" name="Reservation" parent="main_menu" action="reservation_action_form" />
+
+</odoo>
