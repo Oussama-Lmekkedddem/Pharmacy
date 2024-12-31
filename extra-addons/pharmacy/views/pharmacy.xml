@@ -1,11 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="pharmacy_action_form" model="ir.actions.act_window">
-        <field name="name">Pharmacy</field>
-        <field name="res_model">pharmacy.pharmacy</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem id="main_menu" name="Pharmacy" />
-    <menuitem id="menu_pharmacy" name="Pharmacy" parent="main_menu" action="pharmacy_action_form" />
+    <data>
+        <!-- Tree View -->
+        <record id="view_admin_pharmacy_tree" model="ir.ui.view">
+            <field name="name">admin.pharmacy.tree</field>
+            <field name="model">pharmacy.pharmacy</field>
+            <field name="arch" type="xml">
+                <tree string="Pharmacy" create="false">
+                    <field name="name" string="Pharmacy Name"/>
+                    <field name="owner_id" string="Owner"/>
+                    <field name="phone" string="Phone"/>
+                    <field name="city" string="City"/>
+                    <field name="status" string="Status"/>
+                </tree>
+            </field>
+        </record>
 
+        <!-- Form View -->
+        <record id="view_admin_pharmacy_form" model="ir.ui.view">
+            <field name="name">admin.pharmacy.form</field>
+            <field name="model">pharmacy.pharmacy</field>
+            <field name="arch" type="xml">
+                <form string="Pharmacy" create="false">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="city" readonly="1"/>
+                            <field name="country" readonly="1"/>
+                            <field name="latitude" readonly="1"/>
+                            <field name="longitude" readonly="1"/>
+                            <field name="phone" readonly="1"/>
+                            <field name="owner_id" readonly="1"/>
+                            <field name="description" readonly="1"/>
+                            <field name="logo" widget="image" options="{'size': [60, 60]}" readonly="1"/>
+                            <field name="documentations" widget="many2many_binary" readonly="1"/>
+                            <field name="status"/>
+                        </group>
+                        <group string="Stocks">
+                            <field name="stocks" readonly="1">
+                                <tree string="Stocks" create="false" edit="false" delete="false">
+                                    <field name="medicine_id" string="Medicine"/>
+                                    <field name="price" string="Price"/>
+                                    <field name="quantity" string="Quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <footer>
+                            <button name="approve_pharmacy" string="Approve" type="object" class="btn-primary"/>
+                            <button name="decline_pharmacy" string="Decline" type="object" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_admin_pharmacy" model="ir.actions.act_window">
+            <field name="name">Pharmacy</field>
+            <field name="res_model">pharmacy.pharmacy</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="main_menu" name="Pharmacy" />
+        <menuitem id="menu_pharmacy_approval" name="Pharmacy" parent="main_menu" action="action_admin_pharmacy"/>
+    </data>
 </odoo>
+

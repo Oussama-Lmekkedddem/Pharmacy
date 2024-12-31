@@ -5,7 +5,7 @@ import re
 
 class Owner(models.Model):
     _name = 'pharmacy.owner'
-    _inherit = ['mail.thread', 'mail.activity.mixin']  # Inherit to use message_post
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Owner'
 
     name = fields.Char(string='Name', required=True)
@@ -14,8 +14,36 @@ class Owner(models.Model):
     carte_id = fields.Char(string='Carte ID')
     address = fields.Char(string='Address')
     phone = fields.Char(string='Phone')
-    is_verified = fields.Boolean(string="Is Verified", default=False)
     pharmacy_id = fields.One2many('pharmacy.pharmacy', 'owner_id', string='Pharmacy', limit=1)
+
+    # is_verified = fields.Boolean(string="Is Verified", default=False)
+
+    def create_owner_with_pharmacy(self, owner_data, pharmacy_data):
+        # Create Owner
+        owner = self.create({
+            'name': owner_data['name'],
+            'email': owner_data['email'],
+            'password': owner_data['password'],
+            'carte_id': owner_data['carte_id'],
+            'address': owner_data['address'],
+            'phone': owner_data['phone'],
+        })
+
+        # Create Pharmacy
+        self.env['pharmacy.pharmacy'].create({
+            'name': pharmacy_data['name'],
+            'country': pharmacy_data['country'],
+            'city': pharmacy_data['city'],
+            'longitude': pharmacy_data['longitude'],
+            'latitude': pharmacy_data['latitude'],
+            'phone': pharmacy_data['phone'],
+            'description': pharmacy_data['description'],
+            'documentations': [(6, 0, pharmacy_data.get('documentations', []))],
+            'logo': pharmacy_data.get('logo'),
+            'owner_id': owner.id,
+        })
+
+        return owner
 
     @api.model
     def create_owner(self, name, email, password):
@@ -87,20 +115,13 @@ class Owner(models.Model):
         return owner
 
     def delete_owner(self, owner_id):
-        """Delete the owner from the system"""
+        """Deletes the owner and their associated pharmacy."""
         owner = self.browse(owner_id)
         if owner:
-            user = owner.user_id  # Get the associated user
-
-            if user:
-                user.unlink()
-
+            # Delete associated pharmacy
+            owner.pharmacy_id.unlink()
+            # Delete owner
             owner.unlink()
-
-            owner.message_post(body=f"Owner {owner.name} has been successfully deleted.")
-            return True
-        else:
-            raise ValidationError("Owner not found.")
 
     # Validation Methods (unchanged)
     def validate_name_fields(self, name):

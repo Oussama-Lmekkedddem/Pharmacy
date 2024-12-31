@@ -10,6 +10,7 @@ class AdminController(http.Controller):
 
 
 
+
 # 1. Admin (Odoo Backend Interface):
 # Interface: Odoo backend (default UI for system administration).
 # Authentication: auth='admin' to restrict access to superusers only.

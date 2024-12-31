@@ -10,14 +10,24 @@ class Pharmacy(models.Model):
     name = fields.Char(string='Name', required=True)
     country = fields.Char(string='Country')
     city = fields.Char(string='City', required=True)
-    longitude = fields.Float(string='Longitude', required=True) #digits=(16, 2)
-    latitude = fields.Float(string='Latitude', required=True)   #digits=(16, 2)
+    longitude = fields.Float(string='Longitude', required=True)
+    latitude = fields.Float(string='Latitude', required=True)
     documentations = fields.Many2many('ir.attachment', string='Documentations', required=True)
     phone = fields.Char(string='Phone')
     description = fields.Text(string='Description')
     logo = fields.Binary(string='Logo')
     distance = fields.Float(string='Distance', default=0.0)
     is_Online = fields.Boolean(string="Is Online", default=False)
+
+    status = fields.Selection(
+        [
+            ('pending', 'Pending'),
+            ('approved', 'Approved'),
+            ('declined', 'Declined')
+        ],
+        string="Status",
+        default='pending'
+    )
 
     owner_id = fields.Many2one(
         'pharmacy.owner',
@@ -158,3 +168,12 @@ class Pharmacy(models.Model):
                 'res_id': 1,  # This is just a dummy res_id, as it's a default logo used globally
             })
         return default_logo.id
+
+
+    def approve_pharmacy(self):
+        """Approve the pharmacy and update the status."""
+        self.status = 'approved'
+
+    def decline_pharmacy(self):
+        """Decline the pharmacy and update the status."""
+        self.status = 'declined'

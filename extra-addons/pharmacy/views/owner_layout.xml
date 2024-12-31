@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <template id="owner_layout" name="Owner Layout">
+            <div>
+                <!-- Include Tailwind CSS -->
+                <link rel="stylesheet" type="text/css" href="/pharmacy/static/css/tailwind.css"/>
+
+                <!-- Navbar -->
+                <header>
+                    <div class="bg-gray-100 shadow">
+                        <div class="container mx-auto flex items-center justify-between p-4">
+                            <a class="text-2xl font-bold text-blue-600" href="/">Pharmacy</a>
+                            <nav class="flex space-x-4">
+                                <!-- Navigation Links -->
+                                <a class="text-gray-700 hover:text-blue-600" href="/owner/reservation_management">Home</a>
+                                <a class="text-gray-700 hover:text-blue-600" href="/owner/owner_stock">Stock</a>
+                            </nav>
+                            <form action="/owner/logout" method="post" class="inline">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Page Content -->
+                <main class="container mx-auto mt-10 p-4">
+                    <t t-raw="0"/>
+                </main>
+
+                <!-- Footer -->
+                <footer class="bg-gray-900 text-white mt-10">
+                    <div class="container mx-auto text-center py-4">
+                        <p class="text-sm">2024 My Pharmacy</p>
+                    </div>
+                </footer>
+            </div>
+        </template>
+    </data>
+</odoo>
+

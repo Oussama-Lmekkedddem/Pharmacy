@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <template id="status_pending" name="Pending Status">
+            <head>
+                <link rel="stylesheet" type="text/css" href="/pharmacy/static/css/tailwind.css"/>
+            </head>
+            <body class="bg-yellow-100 flex items-center justify-center h-screen">
+                <div class="bg-white p-6 rounded shadow-md max-w-lg text-center">
+                    <h1 class="text-2xl font-bold text-yellow-600 mb-4">Status: Pending</h1>
+                    <p class="text-gray-700 mb-6">Your pharmacy is currently under review. Once approved, you will be redirected to your dashboard.</p>
+                     <form action="/owner/logout" method="post" class="inline">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+                     </form>
+                </div>
+            </body>
+        </template>
+    </data>
+</odoo>

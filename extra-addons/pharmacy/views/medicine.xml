@@ -1,11 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="medicine_action_form" model="ir.actions.act_window">
-        <field name="name">Medicine</field>
-        <field name="res_model">pharmacy.medicine</field>
-        <field name="view_mode">tree,form,kanban,search,graph</field>
-    </record>
-    <menuitem id="main_menu" name="Pharmacy" />
-    <menuitem id="menu_medicine" name="Medicine" parent="main_menu" action="medicine_action_form" />
+    <data>
+        <!-- Tree View -->
+        <record id="view_medicine_tree" model="ir.ui.view">
+            <field name="name">medicine.tree</field>
+            <field name="model">pharmacy.medicine</field>
+            <field name="arch" type="xml">
+                <tree string="Medicines">
+                    <field name="id" string="ID"/>
+                    <field name="name" string="Medicine Name"/>
+                    <field name="id" string="ID"/>
+                    <field name="name" string="Medicine Name"/>
+                    <field name="forme" string="Medicine Forme"/>
+                    <field name="dosage" string="Medicine Dosage"/>
+                    <field name="unit_dosage" string="Medicine Unit"/>
+                </tree>
+            </field>
+        </record>
 
+        <!-- Form View -->
+        <record id="view_medicine_form" model="ir.ui.view">
+            <field name="name">medicine.form</field>
+            <field name="model">pharmacy.medicine</field>
+            <field name="arch" type="xml">
+                <form string="Medicine">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="forme"/>
+                            <field name="presentation"/>
+                            <field name="composition"/>
+                            <field name="dosage"/>
+                            <field name="unit_dosage"/>
+                            <field name="images" widget="image" options="{'image_index': 0, 'size': [128, 128]}"/>
+                        </group>
+                        <group string="Stocks">
+                            <field name="stocks" readonly="1">
+                                <tree string="Stocks">
+                                    <field name="pharmacy_id" string="Pharmacy"/>
+                                    <field name="price" string="Price"/>
+                                    <field name="quantity" string="Quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="medicine_action_form" model="ir.actions.act_window">
+            <field name="name">Medicine</field>
+            <field name="res_model">pharmacy.medicine</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="main_menu" name="Pharmacy"/>
+        <menuitem id="menu_medicine" name="Medicine" parent="main_menu" action="medicine_action_form"/>
+    </data>
 </odoo>

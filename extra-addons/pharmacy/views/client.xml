@@ -1,11 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="client_action_form" model="ir.actions.act_window">
-        <field name="name">Client</field>
-        <field name="res_model">pharmacy.client</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem id="main_menu" name="Pharmacy" />
-    <menuitem id="menu_client" name="Client" parent="main_menu" action="client_action_form" />
+    <data>
+        <!-- Tree View -->
+        <record id="view_client_tree" model="ir.ui.view">
+            <field name="name">client.tree</field>
+            <field name="model">pharmacy.client</field>
+            <field name="arch" type="xml">
+                <tree string="Clients" create="false">
+                    <field name="name" string="Client Name"/>
+                    <field name="email" string="Email"/>
+                </tree>
+            </field>
+        </record>
 
+        <!-- Form View -->
+        <record id="view_client_form" model="ir.ui.view">
+            <field name="name">client.form</field>
+            <field name="model">pharmacy.client</field>
+            <field name="arch" type="xml">
+                <form string="Client" create="false">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="email" readonly="1"/>
+                        </group>
+                        <group string="Reservations">
+                            <field name="reservations" readonly="1">
+                                <tree>
+                                    <field name="stock_id" string="Medicine"/>
+                                    <field name="quantity" string="Quantity"/>
+                                    <field name="price" string="Price"/>
+                                    <field name="state" string="State"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="client_action_form" model="ir.actions.act_window">
+            <field name="name">Client</field>
+            <field name="res_model">pharmacy.client</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_client_tree"/>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="main_menu" name="Pharmacy"/>
+        <menuitem id="menu_client" name="Client" parent="main_menu" action="client_action_form"/>
+    </data>
 </odoo>

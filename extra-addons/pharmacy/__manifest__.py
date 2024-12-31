@@ -4,18 +4,21 @@
     'category': 'Custom',
     'author': 'Oussama & Aymen',
     'description': 'A module to manage dashboards for clients, owners, and admins in a pharmacy system.',
-    'depends': ['base', 'website'],
+    'depends': ['base', 'website', 'web'],
     'data': [
         'views/client.xml',
-        'views/owner.xml',
         'views/medicine.xml',
         'views/pharmacy.xml',
-        'views/reservation.xml',
-        'views/stock.xml',
         'views/owner_login.xml',
         'views/owner_logup.xml',
-        'views/owner_page.xml',
+        'views/owner_layout.xml',
+        'views/owner_stock.xml',
+        'views/owner_reservation.xml',
+
+        'views/status_pending.xml',
+        'views/status_declined.xml',
         'security/groups.xml',
+
     ],
     'assets': {
         'web.assets_frontend': [
@@ -33,3 +36,5 @@
 #    'views/client_login.xml',
 #         'views/client_logup.xml',
 #         'views/client_page.xml',
+
+# 'views/admin_approval.xml',
