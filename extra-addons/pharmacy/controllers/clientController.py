@@ -105,7 +105,7 @@ class ClientController(http.Controller):
             'name': reservation.stock_id.medicine_id.name,
             'amount': reservation.quantity,
             'price': reservation.price,
-        } for reservation in initReservations]
+        } for reservation in initReservations if reservation.state == 'wait']
 
 
         return self.render_static_html("client_page.html", {
@@ -161,7 +161,7 @@ class ClientController(http.Controller):
             'name': reservation.stock_id.medicine_id.name,
             'amount': reservation.quantity,
             'price': reservation.price,
-        } for reservation in initReservations]
+        } for reservation in initReservations if reservation.state == 'wait']
 
         return self.render_static_html("client_medicine.html", {
             'client': client,
@@ -211,7 +211,7 @@ class ClientController(http.Controller):
             'name': reservation.stock_id.medicine_id.name,
             'amount': reservation.quantity,
             'price': reservation.price,
-        } for reservation in initReservations]
+        } for reservation in initReservations if reservation.state == 'wait']
 
 
         return self.render_static_html("client_pharmacy.html", {

@@ -16,8 +16,6 @@ class Owner(models.Model):
     phone = fields.Char(string='Phone')
     pharmacy_id = fields.One2many('pharmacy.pharmacy', 'owner_id', string='Pharmacy', limit=1)
 
-    # is_verified = fields.Boolean(string="Is Verified", default=False)
-
     def create_owner_with_pharmacy(self, owner_data, pharmacy_data):
         # Create Owner
         owner = self.create({

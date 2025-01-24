@@ -1,10 +1,12 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
+import pandas as pd
 
 class Medicine(models.Model):
     _name = 'pharmacy.medicine'
     _description = 'Medicine'
+    _import = True
 
     name = fields.Char(string='Name', required=True)
     forme = fields.Char(string='Forme')
@@ -18,9 +20,27 @@ class Medicine(models.Model):
 
     @api.model
     def unlink(self):
-        for stock in self.stocks:
-            stock.unlink()
         return super(Medicine, self).unlink()
+
+    @api.model
+    def import_medicines_from_excel(self, file_path):
+        try:
+            df = pd.read_excel(file_path)
+            required_columns = ['name', 'forme', 'presentation', 'composition', 'dosage', 'unit_dosage']
+            if not all(col in df.columns for col in required_columns):
+                raise ValueError(f"Excel file must contain columns: {required_columns}")
+            for _, row in df.iterrows():
+                self.create({
+                    'name': row['name'],
+                    'forme': row['forme'],
+                    'presentation': row['presentation'],
+                    'composition': row['composition'],
+                    'dosage': row['dosage'],
+                    'unit_dosage': row['unit_dosage'],
+                })
+        except Exception as e:
+            raise ValueError(f"Error importing Excel file: {e}")
+
 
     @api.model
     def create_medicine(self, name, forme=None, presentation=None, composition=None, dosage=None, unit_dosage=None,

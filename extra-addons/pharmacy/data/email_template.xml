@@ -1,0 +1,26 @@
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_reservation_invoice" model="mail.template">
+            <field name="name">Reservation Invoice Email</field>
+            <field name="model_id" ref="model_pharmacy_reservation"/>
+            <field name="subject">Your Medicine Reservation Invoice</field>
+            <field name="email_to">${object.client_id.email}</field>
+            <field name="body_html">
+                <![CDATA[
+                <p>Dear ${object.client_id.name},</p>
+                <p>Thank you for reserving your medicine with us. Here are your reservation details:</p>
+                <ul>
+                    <li><strong>Medicine:</strong> ${object.stock_id.medicine_id.name}</li>
+                    <li><strong>Quantity:</strong> ${object.quantity}</li>
+                    <li><strong>Total Price:</strong> ${object.price}</li>
+                    <li><strong>Reservation State:</strong> ${object.state}</li>
+                </ul>
+                <p>Your invoice is attached to this email.</p>
+                <p>Best regards,<br/>Pharmacy Team</p>
+                ]]>
+            </field>
+            <field name="report_template" ref="account.report_invoice"/> <!-- Correct Report -->
+            <field name="report_name">Reservation Invoice</field>
+        </record>
+    </data>
+</odoo>

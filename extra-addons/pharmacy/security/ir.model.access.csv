@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_owner_user,owner_user,model_pharmacy_owner,pharmacy_owner_group,1,1,1,1
+access_pharmacy_medicine_admin,pharmacy_medicine_admin,model_pharmacy_medicine,,1,1,1,1
+access_import_medicine_wizard,access.import.medicine.wizard,model_import_medicine_wizard,,1,1,1,1
+

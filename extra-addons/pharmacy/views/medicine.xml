@@ -6,13 +6,11 @@
             <field name="model">pharmacy.medicine</field>
             <field name="arch" type="xml">
                 <tree string="Medicines">
-                    <field name="id" string="ID"/>
-                    <field name="name" string="Medicine Name"/>
-                    <field name="id" string="ID"/>
                     <field name="name" string="Medicine Name"/>
                     <field name="forme" string="Medicine Forme"/>
-                    <field name="dosage" string="Medicine Dosage"/>
-                    <field name="unit_dosage" string="Medicine Unit"/>
+                    <field name="composition" string="Medicine Composition"/>
+                    <field name="dosage" string="Medicine Dosage" />
+                    <field name="unit_dosage" string="Medicine Unit" />
                 </tree>
             </field>
         </record>
@@ -54,8 +52,38 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!-- Wizard Form View -->
+        <record id="view_import_medicine_form" model="ir.ui.view">
+            <field name="name">import.medicine.wizard.form</field>
+            <field name="model">import.medicine.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import Medicines">
+                    <sheet>
+                        <group>
+                            <field name="file" widget="binary" filename="file_name"/>
+                            <field name="file_name"/>
+                        </group>
+                        <footer>
+                            <button string="Import" type="object" name="import_medicines" class="btn-primary"/>
+                            <button string="Discard" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Wizard Action -->
+        <record id="action_import_medicine" model="ir.actions.act_window">
+            <field name="name">Import Medicines</field>
+            <field name="res_model">import.medicine.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
         <!-- Menu -->
         <menuitem id="main_menu" name="Pharmacy"/>
-        <menuitem id="menu_medicine" name="Medicine" parent="main_menu" action="medicine_action_form"/>
+        <menuitem id="menu_medicine" name="Medicine" parent="main_menu"/>
+        <menuitem id="menu_view_medicine" name="View Medicines" parent="menu_medicine" action="medicine_action_form"/>
+        <menuitem id="menu_import_medicine" name="Import Medicines" parent="menu_medicine" action="action_import_medicine"/>
     </data>
 </odoo>

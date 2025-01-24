@@ -8,13 +8,14 @@
     <title>Pharmacy Page</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-     <section class="mx-auto fixed z-50 flex flex-col items-end">
+      <section class="mx-auto w-full z-50 flex flex-col items-end">
       <!-- navbar -->
-        <nav class="flex justify-between bg-gray-900 text-white w-screen">
+        <nav class="flex justify-between bg-green-600 text-white w-full shadow-md bg-cover bg-center"
+             style="background-image: url('/pharmacy/static/image/Group-6.png');">
           <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-            <a class="text-3xl font-bold font-heading" href="#">
-              <!-- <img class="h-9" src="logo.png" alt="logo"> -->
-              PHARMA
+            <img class="-my-6 h-24 -ml-6 mr-4" src="/pharmacy/static/logo/raja_logo.png" alt="logo">
+            <a class="text-3xl font-bold font-heading" href="/client/client_page">
+              RAJA PHARMACY
             </a>
             <!-- Nav Links -->
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
@@ -64,22 +65,22 @@
         <!-- dropdown element -->
         <div class="absolute z-50 mt-24">
                <div id="navbar_dropdown"
-                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
-                    <div class="px-4 py-3">
+                     class="border border-green-800 hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                    <div class="px-4 py-3 border-b border-green-800">
                         <span class="block text-sm text-gray-900 dark:text-white">{{ client.name }}</span>
                         <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ client.email }}</span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="/client/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                            <a href="/client/login" class="block px-4 py-2 text-sm text-green-800 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                         </li>
                     </ul>
                </div>
                <div id="navbar_reservation_dropdown"
-                     class="hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
+                     class="border border-green-800 hidden mr-5 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 w-auto">
                     <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-green-800">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Medicine
@@ -169,6 +170,32 @@
 
         </div>
      </main>
+
+     <footer class="bg-green-800 text-white py-4 mt-auto">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+          <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+
+            <div class="flex items-center space-x-6">
+               <div class="mb-4 sm:mb-0 text-center sm:text-left ml-5 mr-10">
+                  <h3 class="text-lg font-semibold">Contact Administration</h3>
+               </div>
+              <a href="mailto:info@pharmacy.com" class="flex items-center space-x-3 hover:text-gray-300 transition duration-200">
+                <img src="/pharmacy/static/logo/Group-9445.png" alt="Email Icon" class="w-6 h-6">
+                <span class="text-sm">info@pharmacy.com</span>
+              </a>
+              <a href="tel:5554121234" class="flex items-center space-x-3 hover:text-gray-300 transition duration-200">
+                <img src="/pharmacy/static/logo/Group-9445.png" alt="Phone Icon" class="w-6 h-6">
+                <span class="text-sm">(212) 6123-45678</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div class="border-t border-green-600 my-3"></div>
+        <div class="text-center text-sm">
+          &copy; 2025 Pharmacy Management System.
+        </div>
+      </footer>
 
     <script src="/pharmacy/static/js/script.js"></script>
     <script>
@@ -311,7 +338,7 @@
                                         $${reservation.price}
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <a href="/client/delete_reservation/${reservation.id}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                        <a href="/client/delete_reservation/${reservation.id}" class="font-medium text-green-800 dark:text-blue-500 hover:underline">Delete</a>
                                     </td>
                     `;
                     container.appendChild(reservationElement);

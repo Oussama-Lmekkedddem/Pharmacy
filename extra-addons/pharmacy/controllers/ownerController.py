@@ -2,7 +2,7 @@ from odoo.exceptions import ValidationError
 from odoo import http
 from odoo.http import request
 import base64
-
+from datetime import datetime, timedelta
 
 class OwnerController(http.Controller):
 
@@ -158,7 +158,11 @@ class OwnerController(http.Controller):
         reservation_id = int(kwargs.get('reservation_id', 0))
         reservation = http.request.env['pharmacy.reservation'].sudo().browse(reservation_id)
         if reservation.exists():
-            reservation.unlink()
+            reservation.write({
+                'state': 'canceled',
+                'cancel_date': datetime.now(),
+            })
+            reservation.delete_old_reservations()
             return http.request.redirect('/owner/reservation_management')
         else:
             return http.request.redirect('/owner/reservation_management')
@@ -168,14 +172,16 @@ class OwnerController(http.Controller):
         reservation_id = int(kwargs.get('reservation_id', 0))
         reservation = http.request.env['pharmacy.reservation'].sudo().browse(reservation_id)
         if reservation.exists():
-            # Reduce the stock quantity
             stock = reservation.stock_id
             if stock.quantity < reservation.quantity:
                 raise ValidationError("Not enough stock to finalize the reservation.")
             stock.quantity -= reservation.quantity
 
-            # Remove the reservation
-            reservation.unlink()
+            reservation.write({
+                'state': 'finalized',
+                'finalized_date': datetime.now(),
+            })
+            reservation.delete_old_reservations()
 
         return http.request.redirect('/owner/reservation_management')
 
@@ -193,8 +199,6 @@ class OwnerController(http.Controller):
                 'stocks': [],
                 'medicines': []
             })
-
-        # Fetch stocks and medicines
         stocks = http.request.env['pharmacy.stock'].sudo().search([('pharmacy_id', '=', pharmacy.id)])
         medicines = http.request.env['pharmacy.medicine'].sudo().search([])
 
@@ -203,7 +207,7 @@ class OwnerController(http.Controller):
             'medicines': medicines
         })
 
-    # Add/Update Stock
+
     @http.route('/owner/manage_stock', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def manage_stock(self, **kwargs):
         owner_id = http.request.session.get('owner_id')
@@ -215,14 +219,13 @@ class OwnerController(http.Controller):
         if not pharmacy:
             return http.request.redirect('/owner/owner_stock')
 
-        # Handle form submission
         if http.request.httprequest.method == 'POST':
             stock_id = int(kwargs.get('stock_id', 0)) if kwargs.get('stock_id') else None
             medicine_id = int(kwargs.get('medicine_id', 0))
             price = float(kwargs.get('price', 0))
             quantity = int(kwargs.get('quantity', 0))
 
-            # Validate that the medicine exists
+
             medicine = http.request.env['pharmacy.medicine'].sudo().browse(medicine_id)
             if not medicine.exists():
                 return http.request.render('pharmacy.owner_stock', {
@@ -232,8 +235,8 @@ class OwnerController(http.Controller):
                     'form_data': kwargs
                 })
 
-            # Add or update stock
-            if stock_id:  # Update
+
+            if stock_id:
                 stock = http.request.env['pharmacy.stock'].sudo().browse(stock_id)
                 if stock and stock.pharmacy_id.id == pharmacy.id:
                     stock.write({
@@ -241,7 +244,7 @@ class OwnerController(http.Controller):
                         'price': price,
                         'quantity': quantity
                     })
-            else:  # Add
+            else:
                 http.request.env['pharmacy.stock'].sudo().create({
                     'pharmacy_id': pharmacy.id,
                     'medicine_id': medicine_id,
@@ -251,7 +254,7 @@ class OwnerController(http.Controller):
 
             return http.request.redirect('/owner/owner_stock')
 
-        # Fetch stock details if editing
+
         stock_id = int(kwargs.get('stock_id', 0)) if kwargs.get('stock_id') else None
         stock_data = None
         if stock_id:

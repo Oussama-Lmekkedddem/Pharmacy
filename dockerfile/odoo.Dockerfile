@@ -1,6 +1,12 @@
 FROM odoo:16.0
 
-# Additional Python dependencies
+
+USER root
+
+RUN pip install pandas openpyxl
+
+USER odoo
+
 
 
 # COPY config/odoo.conf /etc/odoo/odoo.conf

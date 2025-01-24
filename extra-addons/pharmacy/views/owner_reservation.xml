@@ -2,49 +2,197 @@
     <data>
         <template id="owner_reservation" name="Reservation Management">
             <t t-call="pharmacy.owner_layout">
-                <div class="container mx-auto mt-10 p-4 h-screen">
-                    <h1 class="text-2xl font-bold mb-4">Reservation Management</h1>
-                    <p class="text-gray-700 mb-6">Manage reservations for your pharmacy below.</p>
+                <h1 class="text-3xl font-bold text-green-700 mb-6">Reservation Management</h1>
+                <p class="text-gray-700 mb-4">Manage reservations for your pharmacy below.</p>
+                <div class="overflow-x-auto">
+                  <div class="sm:px-6 w-full">
+                        <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+                            <div class="sm:flex items-center justify-between w-full">
+                              <div class="flex items-center">
+                                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800" data-filter="all">
+                                  <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
+                                    <p>All</p>
+                                  </div>
+                                </a>
+                                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" data-filter="wait">
+                                  <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full">
+                                    <p>New</p>
+                                  </div>
+                                </a>
+                                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" data-filter="finalized">
+                                  <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full">
+                                    <p>Finalized</p>
+                                  </div>
+                                </a>
+                                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" data-filter="canceled">
+                                  <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full">
+                                    <p>Canceled</p>
+                                  </div>
+                                </a>
+                              </div>
 
-                    <!-- Display Existing Reservations -->
-                    <table class="w-full table-auto border border-gray-300 rounded shadow">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Client</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Medicine</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Quantity</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-800">Message</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Total Price</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white">
-                            <t t-foreach="reservations" t-as="reservation">
-                                <tr class="border-b">
-                                    <td class="px-4 py-2 text-gray-700" t-esc="reservation.client_id.name" />
-                                    <td class="px-4 py-2 text-gray-700" t-esc="reservation.stock_id.medicine_id.name" />
-                                     <td class="px-4 py-2 text-gray-700" t-esc="reservation.quantity" />
-                                    <td class="px-4 py-2 text-gray-700" t-esc="reservation.message" />
-                                    <td class="px-4 py-2 text-gray-700" t-esc="reservation.price" />
-                                    <td class="px-4 py-2">
-                                        <!-- Cancel Button -->
-                                        <form action="/owner/cancel_reservation" method="post" class="inline-block">
-                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                            <input type="hidden" name="reservation_id" t-att-value="reservation.id" />
-                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-3 rounded">Cancel</button>
-                                        </form>
-                                        <!-- Finalize Button -->
-                                        <form action="/owner/finalize_reservation" method="post" class="inline-block">
-                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                            <input type="hidden" name="reservation_id" t-att-value="reservation.id" />
-                                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-medium py-1 px-3 rounded">Finalize</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </t>
-                        </tbody>
-                    </table>
-                </div>
+                              <div class="flex px-4 py-3 rounded-md border-2 border-green-500 overflow-hidden max-w-md ml-auto font-[sans-serif]">
+                                <input id="search-bar" type="email" placeholder="Search Something..."
+                                  class="w-full outline-none bg-transparent text-gray-600 text-sm" />
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-gray-600">
+                                  <path
+                                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                                  </path>
+                                </svg>
+                              </div>
+                            </div>
+
+                            <div class="mt-7 overflow-x-auto">
+                               <table class="w-full whitespace-nowrap">
+                                    <thead class="bg-green-600 text-white">
+                                      <tr>
+                                        <th class="px-4 py-3 text-left">Client</th>
+                                        <th class="px-4 py-3 text-left">Medicine</th>
+                                        <th class="px-4 py-3 text-left">Message</th>
+                                        <th class="px-4 py-3 text-left">Quantity</th>
+                                        <th class="px-4 py-3 text-left">Total Price</th>
+                                        <th class="px-4 py-3 text-left">State</th>
+                                        <th class="px-4 py-3 text-left"></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <t t-foreach="reservations" t-as="reservation">
+                                        <tr class="h-1"></tr>
+                                        <tr class="focus:outline-none h-16 border border-gray-100 rounded" t-att-data-state="reservation.state">
+                                            <td>
+                                                <div class="flex items-center pl-5">
+                                                    <p class="text-sm leading-none text-gray-600" t-esc="reservation.client_id.name"></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex items-center pl-5">
+                                                    <p class="text-sm leading-none text-gray-600" t-esc="reservation.stock_id.medicine_id.name"></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                              <div class="relative">
+                                                <div class="flex items-center pl-5 toggle-message cursor-pointer" t-if="reservation.message">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M3.33331 17.4998V6.6665C3.33331 6.00346 3.59671 5.36758 4.06555 4.89874C4.53439 4.4299 5.17027 4.1665 5.83331 4.1665H14.1666C14.8297 4.1665 15.4656 4.4299 15.9344 4.89874C16.4033 5.36758 16.6666 6.00346 16.6666 6.6665V11.6665C16.6666 12.3295 16.4033 12.9654 15.9344 13.4343C15.4656 13.9031 14.8297 14.1665 14.1666 14.1665H6.66665L3.33331 17.4998Z" stroke="#52525B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M10 9.1665V9.17484" stroke="#52525B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M6.66669 9.1665V9.17484" stroke="#52525B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M13.3333 9.1665V9.17484" stroke="#52525B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                  </svg>
+                                                  <p class="text-sm leading-none text-gray-600 ml-2">message</p>
+                                                </div>
+                                                <div class="hidden absolute z-50 p-3 mt-2 text-sm text-gray-600 bg-gray-100 rounded shadow-lg message-content max-w-xs"  t-if="reservation.message">
+                                                   <t t-esc="reservation.message" />
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex items-center pl-5">
+                                                     <p class="text-sm leading-none text-gray-600" t-esc="reservation.quantity"></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                  <div class="flex items-center pl-5">
+                                                       <p class="text-sm leading-none text-gray-600" t-esc="reservation.price"></p>
+                                                  </div>
+                                            </td>
+                                            <td>
+                                                <div
+                                                  class="p-3 text-sm leading-none text-gray-600 focus:outline-none rounded flex items-center justify-center"
+                                                  t-att-class="{
+                                                    'bg-blue-200': reservation.state == 'wait',
+                                                    'bg-green-200': reservation.state == 'finalized',
+                                                    'bg-red-200': reservation.state == 'canceled'
+                                                  }"
+                                                >
+
+                                                  <t t-esc="'New' if reservation.state == 'wait' else 'Finalized' if reservation.state == 'finalized' else 'Canceled'"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                              <t t-if="reservation.state == 'wait'">
+                                                <div class="relative px-5 pt-2">
+                                                    <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
+                                                        <svg class="dropbtn" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                            <path d="M4.16667 10.8332C4.62691 10.8332 5 10.4601 5 9.99984C5 9.5396 4.62691 9.1665 4.16667 9.1665C3.70643 9.1665 3.33334 9.5396 3.33334 9.99984C3.33334 10.4601 3.70643 10.8332 4.16667 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                            <path d="M10 10.8332C10.4602 10.8332 10.8333 10.4601 10.8333 9.99984C10.8333 9.5396 10.4602 9.1665 10 9.1665C9.53976 9.1665 9.16666 9.5396 9.16666 9.99984C9.16666 10.4601 9.53976 10.8332 10 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                            <path d="M15.8333 10.8332C16.2936 10.8332 16.6667 10.4601 16.6667 9.99984C16.6667 9.5396 16.2936 9.1665 15.8333 9.1665C15.3731 9.1665 15 9.5396 15 9.99984C15 10.4601 15.3731 10.8332 15.8333 10.8332Z" stroke="#9CA3AF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <div class="dropdown-content bg-white shadow w-24 absolute z-30 right-0 mr-6 hidden">
+                                                        <form action="/owner/finalize_reservation" method="post" class="focus:outline-none">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="reservation_id" t-att-value="reservation.id"/>
+                                                            <button class="focus:outline-none focus:text-indigo-600 text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
+                                                                Finalize</button>
+                                                        </form>
+                                                         <form action="/owner/cancel_reservation" method="post" class="focus:outline-none">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="reservation_id" t-att-value="reservation.id"/>
+                                                            <button class="focus:outline-none focus:text-indigo-600 text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
+                                                                Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                              </t>
+                                            </td>
+                                        </tr>
+                                      </t>
+                                      <t t-if="not reservations">
+                                          <tr class="h-1"></tr>
+                                          <tr>
+                                            <td colspan="7" class="text-center text-sm leading-none text-gray-600 py-2">
+                                               No reservations available.
+                                            </td>
+                                          </tr>
+                                      </t>
+                                    </tbody>
+                                </table>
+                           </div>
+                      </div>
+                  </div>
+              </div>
+
+               <script>
+              document.querySelectorAll('.dropbtn').forEach(button => {
+                button.addEventListener('click', function () {
+                  const dropdown = this.parentElement.nextElementSibling;
+                  dropdown.classList.toggle('hidden');
+                });
+              });
+
+              document.addEventListener('click', function (e) {
+                const messages = document.querySelectorAll('.message-content');
+                const toggles = document.querySelectorAll('.toggle-message');
+
+                toggles.forEach((toggle, index) => {
+                  const message = messages[index];
+
+                  if (toggle.contains(e.target)) {
+                    message.classList.toggle('hidden');
+                  } else {
+                    message.classList.add('hidden');
+                  }
+                });
+              });
+
+                document.getElementById('search-bar').addEventListener('input', function () {
+                  const query = this.value.toLowerCase();
+                  document.querySelectorAll('tbody tr').forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(query) ? '' : 'none';
+                  });
+                });
+
+                document.querySelectorAll('[data-filter]').forEach(button => {
+                  button.addEventListener('click', function () {
+                    const filter = this.getAttribute('data-filter');
+                    document.querySelectorAll('tbody tr').forEach(row => {
+                      const state = row.getAttribute('data-state');
+                      row.style.display = (filter === 'all' || state === filter) ? '' : 'none';
+                    });
+                  });
+                });
+            </script>
             </t>
         </template>
     </data>

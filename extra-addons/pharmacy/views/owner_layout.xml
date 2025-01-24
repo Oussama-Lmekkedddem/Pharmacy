@@ -1,40 +1,63 @@
 <odoo>
     <data>
         <template id="owner_layout" name="Owner Layout">
-            <div>
+            <div class="min-h-screen flex flex-col">
                 <!-- Include Tailwind CSS -->
                 <link rel="stylesheet" type="text/css" href="/pharmacy/static/css/tailwind.css"/>
-
-                <!-- Navbar -->
-                <header>
-                    <div class="bg-gray-100 shadow">
-                        <div class="container mx-auto flex items-center justify-between p-4">
-                            <a class="text-2xl font-bold text-blue-600" href="/">Pharmacy</a>
-                            <nav class="flex space-x-4">
-                                <!-- Navigation Links -->
-                                <a class="text-gray-700 hover:text-blue-600" href="/owner/reservation_management">Home</a>
-                                <a class="text-gray-700 hover:text-blue-600" href="/owner/owner_stock">Stock</a>
-                            </nav>
-                            <form action="/owner/logout" method="post" class="inline">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
-                            </form>
-                        </div>
+                  <nav class="bg-green-600 text-white shadow-md bg-cover bg-center" style="background-image: url('/pharmacy/static/image/Group-6.png');">
+                    <div class="container mx-auto px-4 py-5 flex items-center">
+                      <div class="w-1/5">
+                        <a href="/" class="text-4xl font-bold">PHARMA</a>
+                      </div>
+                      <div class="w-2/3 h-full flex items-center space-x-6">
+                        <a href="/owner/reservation_management"
+                           class="h-full text-2xl font-normal text-white hover:text-green-300 hover:underline transition-all duration-200">
+                          Home</a>
+                        <a href="/owner/owner_stock"
+                           class="h-full text-2xl font-normal text-white hover:text-green-300 hover:underline transition-all duration-200">
+                          Stock</a>
+                      </div>
+                      <form action="/owner/logout" method="post" class="w-2/6 flex items-center justify-end space-x-6">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                        <button type="submit"
+                                class="text-xl text-white hover:text-green-300 hover:underline transition-all duration-200">
+                          Logout</button>
+                      </form>
                     </div>
-                </header>
+                  </nav>
 
                 <!-- Page Content -->
-                <main class="container mx-auto mt-10 p-4">
+                  <main class="flex-grow container mx-auto my-10 px-4">
                     <t t-raw="0"/>
-                </main>
+                  </main>
 
                 <!-- Footer -->
-                <footer class="bg-gray-900 text-white mt-10">
-                    <div class="container mx-auto text-center py-4">
-                        <p class="text-sm">2024 My Pharmacy</p>
+                  <footer class="bg-green-800 text-white py-4 mt-auto">
+                    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+                      <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+
+                        <div class="flex items-center space-x-6">
+                           <div class="mb-4 sm:mb-0 text-center sm:text-left ml-5 mr-10">
+                              <h3 class="text-lg font-semibold">Contact Administration</h3>
+                           </div>
+                          <a href="mailto:info@pharmacy.com" class="flex items-center space-x-3 hover:text-gray-300 transition duration-200">
+                            <img src="/pharmacy/static/logo/Group-9445.png" alt="Email Icon" class="w-6 h-6"/>
+                            <span class="text-sm">info@pharmacy.com</span>
+                          </a>
+                          <a href="tel:5554121234" class="flex items-center space-x-3 hover:text-gray-300 transition duration-200">
+                            <img src="/pharmacy/static/logo/Group-9445.png" alt="Phone Icon" class="w-6 h-6"/>
+                            <span class="text-sm">(212) 6123-45678</span>
+                          </a>
+                        </div>
+                      </div>
+
                     </div>
-                </footer>
-            </div>
+                    <div class="border-t border-green-600 my-3"></div>
+                    <div class="text-center text-sm">
+                      @; 2025 Pharmacy Management System.
+                    </div>
+                  </footer>
+                </div>
         </template>
     </data>
 </odoo>
